@@ -4,7 +4,7 @@ This repository contains a curated catalog of plugins for [flare](https://github
 
 ## What is here
 
-- `scripts/`: executable plugin scripts (`*.sh`) used by Flare.
+- `scripts/`: plugin scripts used by Flare (`*.sh`, `*.pl`, `*.py`, etc.).
 - `API.md`: script protocol reference (`f!` directives, actions, output format).
 - `DOCS.md`: installation, aliases, and authoring guide.
 
@@ -18,24 +18,26 @@ This repository contains a curated catalog of plugins for [flare](https://github
 - `runner.sh`
 - `sudo.sh`
 - `symbols.sh`
+- `symbols.pl`
 - `volume.sh`
 
 ## Install locally
 
 ```bash
 mkdir -p ~/.config/flare/scripts
-cp -r scripts/*.sh ~/.config/flare/scripts/
-chmod +x ~/.config/flare/scripts/*.sh
+cp -r scripts/* ~/.config/flare/scripts/
+chmod +x ~/.config/flare/scripts/*
 ```
 
 Optional aliases can be defined in `~/.config/flare/scripts/alias.toml`.
 
-If you use `.sh` keys, quote them in TOML:
+If you use extension-based keys (`.sh`, `.pl`, etc.), quote them in TOML:
 
 ```toml
 "volume.sh" = "v!"
 battery = ":"
 "clipboard.sh" = "+"
+"symbols.pl" = "sym!"
 ```
 
 Unquoted dotted keys also work, but they are interpreted as TOML dotted paths.

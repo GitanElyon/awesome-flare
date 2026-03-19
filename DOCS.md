@@ -6,8 +6,8 @@ This folder is the script-plugin side of Flare (the `awesome-flare` plugin set).
 
 ```bash
 mkdir -p ~/.config/flare/scripts
-cp -r scripts/*.sh ~/.config/flare/scripts/
-chmod +x ~/.config/flare/scripts/*.sh
+cp -r scripts/* ~/.config/flare/scripts/
+chmod +x ~/.config/flare/scripts/*
 ```
 
 Restart Flare after adding scripts.
@@ -24,11 +24,12 @@ Example:
 "volume.sh" = "v!"
 battery = ":"
 "clipboard.sh" = "+"
+"symbols.pl" = "sym!"
 ```
 
 Notes:
 
-- Keys may include or omit `.sh`.
+- Keys may include or omit script extensions (`.sh`, `.pl`, etc.).
 - Quoted keys are recommended when keys include dots.
 - Unquoted dotted keys are treated as TOML dotted paths but are still supported by Flare alias parsing.
 

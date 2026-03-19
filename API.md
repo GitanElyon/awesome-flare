@@ -2,6 +2,17 @@
 
 This API is used by script plugins placed in `~/.config/flare/scripts/`.
 
+Supported script styles:
+
+- Executable scripts/binaries (run directly).
+- Non-executable scripts with supported extensions (run via interpreter):
+	- `.sh`, `.bash`, `.zsh`, `.fish`
+	- `.py`
+	- `.pl`
+	- `.rb`
+	- `.js`
+	- `.lua`
+
 The broader ecosystem is cataloged in `awesome-flare`:
 
 - https://github.com/gitanelyon/awesome-flare
