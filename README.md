@@ -1,10 +1,6 @@
-# Awesome Flare (Plugins)
+# Awesome Flare
 
-This directory is the plugin pack for Flare and maps to the `awesome-flare` ecosystem.
-
-The canonical plugin catalog and community list lives at:
-
-- https://github.com/gitanelyon/awesome-flare
+This repository contains a curated catalog of plugins for [flare](https://github.com/gitanelyon/flare), a terminal-first Linux application launcher built with Rust + Ratatui.
 
 ## What is here
 
@@ -32,6 +28,16 @@ cp -r scripts/*.sh ~/.config/flare/scripts/
 chmod +x ~/.config/flare/scripts/*.sh
 ```
 
-Optional aliases can be defined in `~/.config/flare/scripts/Alias.toml`.
+Optional aliases can be defined in `~/.config/flare/scripts/alias.toml`.
+
+If you use `.sh` keys, quote them in TOML:
+
+```toml
+"volume.sh" = "v!"
+battery = ":"
+"clipboard.sh" = "+"
+```
+
+Unquoted dotted keys also work, but they are interpreted as TOML dotted paths.
 
 For protocol details, see [API.md](API.md).

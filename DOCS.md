@@ -16,15 +16,21 @@ Restart Flare after adding scripts.
 
 `help.sh` reads aliases from:
 
-- `~/.config/flare/scripts/Alias.toml`
+- `~/.config/flare/scripts/alias.toml`
 
 Example:
 
 ```toml
-volume.sh = "v!"
-battery.sh = ":"
-clipboard.sh = "+"
+"volume.sh" = "v!"
+battery = ":"
+"clipboard.sh" = "+"
 ```
+
+Notes:
+
+- Keys may include or omit `.sh`.
+- Quoted keys are recommended when keys include dots.
+- Unquoted dotted keys are treated as TOML dotted paths but are still supported by Flare alias parsing.
 
 ## Script contract
 
@@ -33,9 +39,3 @@ clipboard.sh = "+"
 - Control: use `f!` directives for title, actions, item overrides, and single-result mode.
 
 Full protocol reference: [API.md](API.md).
-
-## Publishing
-
-Share new scripts and plugin packs through:
-
-- https://github.com/gitanelyon/awesome-flare
