@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SCRIPT_DIR="$HOME/.config/flare/scripts"
-ALIAS_FILE="$SCRIPT_DIR/Alias.toml"
+ALIAS_FILE="$SCRIPT_DIR/alias.toml"
 
 echo "f! title  Script Commands "
 echo "f! action None"
