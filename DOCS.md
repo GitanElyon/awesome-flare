@@ -16,15 +16,19 @@ Restart Flare after adding scripts.
 
 `help.sh` reads aliases from:
 
-- `~/.config/flare/scripts/alias.toml`
+- `~/.config/flare/alias.toml`
 
 Example:
 
 ```toml
+[scripts]
 "volume.sh" = "v!"
 battery = ":"
 "clipboard.sh" = "+"
 "symbols.pl" = "sym!"
+
+[apps]
+"btop++" = "alacritty -e btop"
 ```
 
 Notes:

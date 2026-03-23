@@ -29,15 +29,20 @@ cp -r scripts/* ~/.config/flare/scripts/
 chmod +x ~/.config/flare/scripts/*
 ```
 
-Optional aliases can be defined in `~/.config/flare/scripts/alias.toml`.
+Optional aliases can be defined in `~/.config/flare/alias.toml`.
 
 If you use extension-based keys (`.sh`, `.pl`, etc.), quote them in TOML:
 
 ```toml
+[scripts]
 "volume.sh" = "v!"
 battery = ":"
 "clipboard.sh" = "+"
 "symbols.pl" = "sym!"
+
+[apps]
+# You can also set app aliases!
+"btop++" = "alacritty -e btop"
 ```
 
 Unquoted dotted keys also work, but they are interpreted as TOML dotted paths.
