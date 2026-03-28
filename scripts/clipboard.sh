@@ -1,89 +1,110 @@
 #!/usr/bin/env bash
 
 QUERY="${1:-}"
+echo "f! title Clipboard History"
 
-# Cache directory and file
-CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/flare"
-CACHE_FILE="$CACHE_DIR/clipboard.txt"
-mkdir -p "$CACHE_DIR"
-
-if [[ -z "$QUERY" ]] || [[ ! -f "$CACHE_FILE" ]]; then
-    > "$CACHE_FILE"
-    
-    # Prepend the current active clipboard items first
-    if command -v wl-paste >/dev/null 2>&1; then
-        content="$(wl-paste -n 2>/dev/null)"
-        if [[ -n "$content" ]]; then
-              content_clean="${content//$'\n'/ }"
-            printf "RAW\t%s\n" "$content_clean" >> "$CACHE_FILE"
-        fi
-    elif command -v xclip >/dev/null 2>&1; then
-        content="$(xclip -selection clipboard -o 2>/dev/null)"
-        if [[ -n "$content" ]]; then
-            content_clean="${content//$'\n'/ }"
-            printf "RAW\t%s\n" "$content_clean" >> "$CACHE_FILE"
-        fi
-    fi
-
-    # Read external history tools
-    if command -v cliphist >/dev/null 2>&1; then
-        cliphist list 2>/dev/null | head -n 400 | while IFS=$'\t' read -r id content; do
-            [[ -z "$id" || -z "$content" ]] && continue
-            printf "CLIPHIST:%s\t%s\n" "$id" "$content"
-        done >> "$CACHE_FILE"
-    elif command -v wl-clipboard-history >/dev/null 2>&1; then
-        wl-clipboard-history list 2>/dev/null | head -n 400 | while IFS=$'\t' read -r content; do
-            content_clean="${content//$'\n'/ }"
-            printf "RAW\t%s\n" "$content_clean"
-        done >> "$CACHE_FILE"
-    elif command -v copyq >/dev/null 2>&1; then
-        copyq tab clipboard read 2>/dev/null | head -n 400 | while IFS=$'\n' read -r content; do
-             content_clean="${content//$'\n'/ }"
-             printf "RAW\t%s\n" "$content_clean"
-        done >> "$CACHE_FILE"
-    fi
+copy_backend=""
+if command -v wl-copy >/dev/null 2>&1; then
+    copy_backend="wl-copy"
+elif command -v xclip >/dev/null 2>&1; then
+    copy_backend="xclip"
 fi
 
-echo "f! title Clipboard History"
+if [[ -z "$copy_backend" ]]; then
+    echo "f! action None"
+    echo "  No clipboard writer found (need wl-copy or xclip)|"
+    exit 0
+fi
+
+emit_raw_item() {
+    local content="$1"
+    [[ -z "$content" ]] && return
+
+    local title encoded cmd lower
+    title="${content//$'\n'/ }"
+    title="${title//|/¦}"
+    title="$(printf '%.120s' "$title")"
+    lower="${title,,}"
+
+    if [[ -n "$search" && "$lower" != *"$search"* ]]; then
+        return
+    fi
+    if [[ -n "${seen[$title]}" ]]; then
+        return
+    fi
+    seen["$title"]=1
+
+    encoded="$(printf '%s' "$content" | base64 -w 0)"
+    if [[ "$copy_backend" == "wl-copy" ]]; then
+        cmd="tmp=\$(mktemp); base64 -d <<< '$encoded' > \"\$tmp\"; wl-copy < \"\$tmp\"; rm -f \"\$tmp\""
+    else
+        cmd="tmp=\$(mktemp); base64 -d <<< '$encoded' > \"\$tmp\"; xclip -selection clipboard -in < \"\$tmp\"; rm -f \"\$tmp\""
+    fi
+
+    echo "f! item ${title}|${cmd}|ExecuteAndExit"
+    count=$((count + 1))
+}
+
+emit_cliphist_item() {
+    local id="$1"
+    local content="$2"
+    [[ -z "$id" || -z "$content" ]] && return
+
+    local title lower cmd
+    title="${content//$'\n'/ }"
+    title="${title//|/¦}"
+    title="$(printf '%.120s' "$title")"
+    lower="${title,,}"
+
+    if [[ -n "$search" && "$lower" != *"$search"* ]]; then
+        return
+    fi
+    if [[ -n "${seen[$title]}" ]]; then
+        return
+    fi
+    seen["$title"]=1
+
+    if [[ "$copy_backend" == "wl-copy" ]]; then
+        cmd="tmp=\$(mktemp); cliphist decode $id > \"\$tmp\"; wl-copy < \"\$tmp\"; rm -f \"\$tmp\""
+    else
+        cmd="tmp=\$(mktemp); cliphist decode $id > \"\$tmp\"; xclip -selection clipboard -in < \"\$tmp\"; rm -f \"\$tmp\""
+    fi
+
+    echo "f! item ${title}|${cmd}|ExecuteAndExit"
+    count=$((count + 1))
+}
 
 search="${QUERY,,}"
 count=0
 declare -A seen
 
-while IFS=$'\t' read -r type_id content; do
-    [[ -z "$content" ]] && continue
+if command -v wl-paste >/dev/null 2>&1; then
+    current_clip="$(wl-paste -n 2>/dev/null)"
+    emit_raw_item "$current_clip"
+elif command -v xclip >/dev/null 2>&1; then
+    current_clip="$(xclip -selection clipboard -o 2>/dev/null)"
+    emit_raw_item "$current_clip"
+fi
 
-    if [[ -n "${seen[$content]}" ]]; then
-        continue
-    fi
-    seen["$content"]=1
-
-    lower="${content,,}"
-    if [[ -n "$search" && "$lower" != *"$search"* ]]; then
-        continue
-    fi
-
-    # Preview max 120 chars
-    title_raw="${content//$'\n'/ }"
-    title="$(printf '%.120s' "$title_raw")"
-
-    if [[ "$type_id" == CLIPHIST:* ]]; then
-        id="${type_id#CLIPHIST:}"
-        if command -v wl-copy >/dev/null 2>&1; then
-            cmd="cliphist decode $id | wl-copy"
-        else
-            cmd="cliphist decode $id | xclip -selection clipboard -in"
-        fi
-        echo "f! item ${title}|${cmd}|ExecuteAndExit"
-    else
-        echo "f! item ${title}|${content}|CopyToClipboardAndExit"
-    fi
-
-    count=$((count + 1))
-    if (( count >= 100 )); then
-        break
-    fi
-done < "$CACHE_FILE"
+if command -v cliphist >/dev/null 2>&1; then
+    while IFS= read -r line; do
+        (( count >= 100 )) && break
+        id="${line%%$'\t'*}"
+        content="${line#*$'\t'}"
+        [[ -z "$line" || "$id" == "$line" ]] && continue
+        emit_cliphist_item "$id" "$content"
+    done < <(cliphist list 2>/dev/null | head -n 400)
+elif command -v wl-clipboard-history >/dev/null 2>&1; then
+    while IFS= read -r content; do
+        (( count >= 100 )) && break
+        emit_raw_item "$content"
+    done < <(wl-clipboard-history list 2>/dev/null | head -n 400)
+elif command -v copyq >/dev/null 2>&1; then
+    while IFS= read -r content; do
+        (( count >= 100 )) && break
+        emit_raw_item "$content"
+    done < <(copyq tab clipboard read 2>/dev/null | head -n 400)
+fi
 
 if (( count == 0 )); then
     echo "f! action None"
