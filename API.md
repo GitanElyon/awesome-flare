@@ -34,6 +34,10 @@ Lines prefixed with `f! ` are control directives:
 
 - `f! title <text>`
 	- Sets list title.
+- `f! message <text>`
+	- Sets the status/message line under the input.
+- `f! clear_message`
+	- Clears the status/message line.
 - `f! action <Action>`
 	- Sets default action for all list rows.
 - `f! item_action <Action>`
@@ -50,13 +54,53 @@ Lines prefixed with `f! ` are control directives:
 ## Supported actions
 
 - `CopyToClipboardAndExit`
+- `CopyToClipboard`
+- `SetStatusMessage`
+- `ClearStatusMessage`
 - `SetSearchQuery`
 - `AppendToQuery`
+- `PrependToQuery`
+- `ReplaceLastToken`
 - `PopLastToken`
+- `PopLastChar`
 - `ClearQuery`
+- `RefreshResults`
 - `ExecuteAndExit`
 - `ExecuteAndRefresh`
 - `None`
+
+### Action semantics
+
+- `CopyToClipboardAndExit`
+	- Copies value to clipboard and exits Flare.
+- `CopyToClipboard`
+	- Copies value to clipboard and keeps Flare open.
+- `SetStatusMessage`
+	- Sets the status/message line to value.
+- `ClearStatusMessage`
+	- Clears the status/message line.
+- `SetSearchQuery`
+	- Replaces the current query with value.
+- `AppendToQuery`
+	- Appends value to the current query.
+- `PrependToQuery`
+	- Inserts value at the beginning of the current query.
+- `ReplaceLastToken`
+	- Replaces the trailing whitespace-delimited token with value.
+- `PopLastToken`
+	- Removes the trailing whitespace-delimited token from the current query.
+- `PopLastChar`
+	- Removes the last character from the current query.
+- `ClearQuery`
+	- Clears the entire query.
+- `RefreshResults`
+	- Re-runs filtering/script resolution without changing query text.
+- `ExecuteAndExit`
+	- Executes value as a shell command and exits Flare.
+- `ExecuteAndRefresh`
+	- Executes value as a shell command and keeps Flare open.
+- `None`
+	- No-op action, keeps Flare open.
 
 ## Example
 
