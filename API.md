@@ -52,6 +52,7 @@ Lines prefixed with `f! ` are control directives:
 - `CopyToClipboardAndExit`
 - `SetSearchQuery`
 - `AppendToQuery`
+- `PopLastToken`
 - `ClearQuery`
 - `ExecuteAndExit`
 - `ExecuteAndRefresh`
