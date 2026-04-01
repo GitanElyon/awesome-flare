@@ -1,6 +1,6 @@
-# Contributing to Awesome Flare
+# Contributing to Awesome Qst
 
-Contributions to the `awesome-flare` plugin pack are welcome! This includes new scripts, bug fixes, documentation improvements, and more.
+Contributions to the `awesome-qst` plugin pack are welcome! This includes new scripts, bug fixes, documentation improvements, and more.
 
 ## How to contribute
 

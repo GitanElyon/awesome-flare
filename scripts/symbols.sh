@@ -3,7 +3,7 @@
 QUERY="${1:-}"
 query_lc="${QUERY,,}"
 
-CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/flare"
+CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/qst"
 CACHE_FILE="$CACHE_DIR/symbols.txt"
 mkdir -p "$CACHE_DIR"
 
@@ -11,17 +11,17 @@ if [[ ! -f "$CACHE_FILE" ]]; then
     > "$CACHE_FILE"
     
     repo_symbols="$(cd "$(dirname "$0")/.." && pwd)/assets/symbols.json"
-    dev_symbols="$HOME/Projects/flare/assets/symbols.json"
+    dev_symbols="$HOME/Projects/qst/assets/symbols.json"
     
     source_json=""
-    if [[ -f "$HOME/.config/flare/symbols.json" ]]; then
-        source_json="$HOME/.config/flare/symbols.json"
+    if [[ -f "$HOME/.config/qst/symbols.json" ]]; then
+        source_json="$HOME/.config/qst/symbols.json"
     elif [[ -f "$repo_symbols" ]]; then
         source_json="$repo_symbols"
     elif [[ -f "$dev_symbols" ]]; then
         source_json="$dev_symbols"
-    elif [[ -f "/usr/share/flare/symbols.json" ]]; then
-        source_json="/usr/share/flare/symbols.json"
+    elif [[ -f "/usr/share/qst/symbols.json" ]]; then
+        source_json="/usr/share/qst/symbols.json"
     fi
     
     if [[ -n "$source_json" && -f "$source_json" ]]; then
@@ -53,7 +53,7 @@ fi
 
 is_favorite() {
     local name="$1"
-    local hist="$HOME/.config/flare/history.toml"
+    local hist="$HOME/.config/qst/history.toml"
     [[ -f "$hist" ]] || return 1
     grep -q "favorite_symbols" "$hist" || return 1
     grep -q "\"$name\"" "$hist"

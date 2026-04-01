@@ -1,22 +1,22 @@
-# Flare Plugin Docs (Script Pack)
+# Qst Plugin Docs (Script Pack)
 
-This folder is the script-plugin side of Flare (the `awesome-flare` plugin set).
+This folder is the script-plugin side of qst (the `awesome-qst` plugin set).
 
 ## Install scripts
 
 ```bash
-mkdir -p ~/.config/flare/scripts
-cp -r scripts/* ~/.config/flare/scripts/
-chmod +x ~/.config/flare/scripts/*
+mkdir -p ~/.config/qst/scripts
+cp -r scripts/* ~/.config/qst/scripts/
+chmod +x ~/.config/qst/scripts/*
 ```
 
-Restart Flare after adding scripts.
+Restart qst after adding scripts.
 
 ## Aliases
 
 `help.sh` reads aliases from:
 
-- `~/.config/flare/alias.toml`
+- `~/.config/qst/alias.toml`
 
 Example:
 
@@ -35,12 +35,12 @@ Notes:
 
 - Keys may include or omit script extensions (`.sh`, `.pl`, etc.).
 - Quoted keys are recommended when keys include dots.
-- Unquoted dotted keys are treated as TOML dotted paths but are still supported by Flare alias parsing.
+- Unquoted dotted keys are treated as TOML dotted paths but are still supported by qst alias parsing.
 
 ## Script contract
 
 - Input: script arguments from current query.
-- Output: line-oriented protocol parsed by Flare.
+- Output: line-oriented protocol parsed by qst.
 - Control: use `f!` directives for title, actions, item overrides, and single-result mode.
 
 Full protocol reference: [API.md](API.md).

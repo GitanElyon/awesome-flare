@@ -1,6 +1,6 @@
-# Flare Script Plugin API
+# Qst Script Plugin API
 
-This API is used by script plugins placed in `~/.config/flare/scripts/`.
+This API is used by script plugins placed in `~/.config/qst/scripts/`.
 
 Supported script styles:
 
@@ -13,14 +13,14 @@ Supported script styles:
 	- `.js`
 	- `.lua`
 
-The broader ecosystem is cataloged in `awesome-flare`:
+The broader ecosystem is cataloged in `awesome-qst`:
 
-- https://github.com/gitanelyon/awesome-flare
+- https://github.com/gitanelyon/awesome-qst
 
 ## Invocation model
 
 - A script is invoked with the current query payload as arguments.
-- Script stdout is parsed line-by-line by Flare.
+- Script stdout is parsed line-by-line by qst.
 - Empty lines are ignored.
 
 ## Item output
@@ -65,7 +65,7 @@ Rules:
 
 - Metadata tokens are appended at the end of the row or directive payload.
 - Multiple metadata tokens may be chained in the same row.
-- If a literal `/@meta` is used at the start of a row, Flare treats it as normal text. 
+- If a literal `/@meta` is used at the start of a row, qst treats it as normal text. 
 
 Supported row metadata keys:
 
@@ -103,9 +103,9 @@ Supported row metadata keys:
 ### Action semantics
 
 - `CopyToClipboardAndExit`
-	- Copies value to clipboard and exits Flare.
+	- Copies value to clipboard and exits qst.
 - `CopyToClipboard`
-	- Copies value to clipboard and keeps Flare open.
+	- Copies value to clipboard and keeps qst open.
 - `SetStatusMessage`
 	- Sets the status/message line to value.
 - `ClearStatusMessage`
@@ -127,11 +127,11 @@ Supported row metadata keys:
 - `RefreshResults`
 	- Re-runs filtering/script resolution without changing query text.
 - `ExecuteAndExit`
-	- Executes value as a shell command and exits Flare.
+	- Executes value as a shell command and exits qst.
 - `ExecuteAndRefresh`
-	- Executes value as a shell command and keeps Flare open.
+	- Executes value as a shell command and keeps qst open.
 - `None`
-	- No-op action, keeps Flare open.
+	- No-op action, keeps qst open.
 
 ## Example
 

@@ -1,13 +1,13 @@
 <p align="center">
-  <img src="assets/awesome-flare.svg" alt="Flare Logo" width="577">
+  <img src="assets/awesome-qst.svg" alt="qst Logo" width="577">
 </p>
 
 
-This repository contains a curated catalog of plugins for [flare](https://github.com/gitanelyon/flare), a terminal-first Linux application launcher built with Rust + Ratatui.
+This repository contains a curated catalog of plugins for [qst](https://github.com/gitanelyon/qst), a terminal-first Linux application launcher built with Rust + Ratatui.
 
 ## What is here
 
-- `scripts/`: plugin scripts used by Flare (`*.sh`, `*.pl`, `*.py`, etc.).
+- `scripts/`: plugin scripts used by qst (`*.sh`, `*.pl`, `*.py`, etc.).
 - `API.md`: script protocol reference (`f!` directives, actions, output format).
 - `DOCS.md`: installation, aliases, and authoring guide.
 
@@ -28,12 +28,12 @@ This repository contains a curated catalog of plugins for [flare](https://github
 ## Install locally
 
 ```bash
-mkdir -p ~/.config/flare/scripts
-cp -r scripts/* ~/.config/flare/scripts/
-chmod +x ~/.config/flare/scripts/*
+mkdir -p ~/.config/qst/scripts
+cp -r scripts/* ~/.config/qst/scripts/
+chmod +x ~/.config/qst/scripts/*
 ```
 
-Optional aliases can be defined in `~/.config/flare/alias.toml`.
+Optional aliases can be defined in `~/.config/qst/alias.toml`.
 
 If you use extension-based keys (`.sh`, `.pl`, etc.), quote them in TOML:
 
