@@ -18,6 +18,7 @@ fi
 
 emit_raw_item() {
     local content="$1"
+    local active_meta="${2:-}"
     [[ -z "$content" ]] && return
 
     local title encoded cmd lower
@@ -41,7 +42,7 @@ emit_raw_item() {
         cmd="tmp=\$(mktemp); base64 -d <<< '$encoded' > \"\$tmp\"; xclip -selection clipboard -in < \"\$tmp\"; rm -f \"\$tmp\""
     fi
 
-    echo "f! item ${title}|${cmd}|ExecuteAndExit"
+    echo "f! item ${title}|${cmd}|ExecuteAndExit${active_meta}"
     count=$((count + 1))
 }
 
@@ -80,10 +81,10 @@ declare -A seen
 
 if command -v wl-paste >/dev/null 2>&1; then
     current_clip="$(wl-paste -n 2>/dev/null)"
-    emit_raw_item "$current_clip"
+    emit_raw_item "$current_clip" " @meta:active=true"
 elif command -v xclip >/dev/null 2>&1; then
     current_clip="$(xclip -selection clipboard -o 2>/dev/null)"
-    emit_raw_item "$current_clip"
+    emit_raw_item "$current_clip" " @meta:active=true"
 fi
 
 if command -v cliphist >/dev/null 2>&1; then

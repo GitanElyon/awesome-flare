@@ -74,11 +74,13 @@ while IFS=$'\t' read -r name symbol; do
 
     if is_favorite "$name"; then
         title="★ ${symbol} ${name}"
+        row_meta=" @meta:active=true"
     else
         title="${symbol} ${name}"
+        row_meta=""
     fi
 
-    echo "f! item ${title}|${symbol}"
+    echo "f! item ${title}|${symbol} @meta:meta=unicode,symbol${row_meta}"
     
     count=$((count + 1))
     if (( count >= 300 )); then

@@ -89,15 +89,15 @@ if [[ "$arg" =~ ^([A-Za-z0-9._:-]+)$ ]] && device_exists "$arg"; then
     echo "f! title Brightness - ${safe_device}"
     echo "f! action None"
     if [[ -n "$current_pct" ]]; then
-        echo "  Current: ${current_pct}%|"
+        echo "f! item  Current: ${current_pct}%|Current: ${current_pct}%|None @meta:nonselectable=true @meta:active=true"
     else
-        echo "  Current: unknown|"
+        echo "f! item  Current: unknown|Current: unknown|None @meta:nonselectable=true"
     fi
     echo "f! item  Set to 25%|$(set_brightness_cmd "$device" 25)|ExecuteAndRefresh"
     echo "f! item  Set to 50%|$(set_brightness_cmd "$device" 50)|ExecuteAndRefresh"
     echo "f! item  Set to 75%|$(set_brightness_cmd "$device" 75)|ExecuteAndRefresh"
     echo "f! item  Set to 100%|$(set_brightness_cmd "$device" 100)|ExecuteAndRefresh"
-    echo "f! item  Back to device list||PopLastToken"
+    echo "f! item  Back to device list|Back to device list|PopLastToken @meta:permanent=true"
     exit 0
 fi
 
@@ -119,9 +119,9 @@ while IFS= read -r device; do
     safe_device="$(sanitize_title "$device")"
 
     if [[ -n "$current_pct" ]]; then
-        echo "f! item  ${safe_device}  (current: ${current_pct}%)|${device} |AppendToQuery"
+        echo "f! item  ${safe_device}  (current: ${current_pct}%)|${device} |AppendToQuery @meta:meta=brightness,backlight"
     else
-        echo "f! item  ${safe_device}|${device} |AppendToQuery"
+        echo "f! item  ${safe_device}|${device} |AppendToQuery @meta:meta=brightness,backlight"
     fi
 done < <(list_devices)
 

@@ -48,28 +48,28 @@ fi
 if [[ "$arg" == "power on" ]]; then
     echo "f! title  Bluetooth Admin "
     echo "f! action ExecuteAndRefresh"
-    echo "  Powering on...|bluetoothctl power on"
+    echo "  Powering on...|bluetoothctl power on @meta:urgent=true"
     exit 0
 fi
 
 if [[ "$arg" == "power off" ]]; then
     echo "f! title  Bluetooth Admin "
     echo "f! action ExecuteAndRefresh"
-    echo "  Powering off...|bluetoothctl power off"
+    echo "  Powering off...|bluetoothctl power off @meta:urgent=true"
     exit 0
 fi
 
 if [[ "$arg" == "scan on" ]]; then
     echo "f! title  Bluetooth Admin "
     echo "f! action ExecuteAndRefresh"
-    echo "  Starting scan...|bluetoothctl scan on"
+    echo "  Starting scan...|bluetoothctl scan on @meta:urgent=true"
     exit 0
 fi
 
 if [[ "$arg" == "scan off" ]]; then
     echo "f! title  Bluetooth Admin "
     echo "f! action ExecuteAndRefresh"
-    echo "  Stopping scan...|bluetoothctl scan off"
+    echo "  Stopping scan...|bluetoothctl scan off @meta:urgent=true"
     exit 0
 fi
 
@@ -85,17 +85,17 @@ if is_mac "$arg"; then
 
     echo "f! title  Bluetooth: ${arg} "
     echo "f! action ExecuteAndRefresh"
-    echo "f! item   <- Back to summary|b! |SetSearchQuery"
-    echo "  [${status}]|"
+    echo "f! item   <- Back to summary|b! |PopLastToken @meta:permanent=true"
+    echo "  [${status}] @meta:nonselectable=true @meta:active=true|"
 
     if [[ "$connected" == "1" ]]; then
-        echo "  Disconnect|bluetoothctl disconnect ${arg}"
+        echo "  Disconnect|bluetoothctl disconnect ${arg} @meta:urgent=true"
     else
         echo "  Connect|bluetoothctl connect ${arg}"
     fi
 
     if [[ "$paired" != "1" ]]; then
-        echo "  Pair|bluetoothctl pair ${arg}"
+        echo "  Pair|bluetoothctl pair ${arg} @meta:urgent=true"
     fi
 
     if [[ "$trusted" != "1" ]]; then
@@ -104,7 +104,7 @@ if is_mac "$arg"; then
         echo "  Untrust|bluetoothctl untrust ${arg}"
     fi
 
-    echo "  Remove / Forget|bluetoothctl remove ${arg}"
+    echo "  Remove / Forget|bluetoothctl remove ${arg} @meta:urgent=true"
     exit 0
 fi
 
@@ -129,9 +129,9 @@ fi
 
 echo "f! title  Bluetooth "
 echo "f! action SetSearchQuery"
-echo "  Power: [${power_status}] -> ${power_label}|${power_target}"
-echo "  Scan:  [${scan_status}] -> ${scan_label}|${scan_target}"
-echo "  ────────────────────────────|"
+echo "  Power: [${power_status}] -> ${power_label}|${power_target} @meta:urgent=true"
+echo "  Scan:  [${scan_status}] -> ${scan_label}|${scan_target} @meta:urgent=true"
+echo "  ──────────────────────────── @meta:nonselectable=true|"
 
 devices_found=0
 while IFS= read -r line; do
@@ -139,11 +139,16 @@ while IFS= read -r line; do
     if [[ "$line" =~ ^Device[[:space:]]+([[:xdigit:]:]+)[[:space:]]+(.+)$ ]]; then
         mac="${BASH_REMATCH[1]}"
         name="${BASH_REMATCH[2]}"
-        echo "  ${name}  (${mac})|b! ${mac}"
+        read -r connected paired trusted < <(device_info_flags "$mac")
+        device_meta=" @meta:meta=bluetooth,device"
+        if [[ "$connected" == "1" ]]; then
+            device_meta="${device_meta} @meta:active=true"
+        fi
+        echo "  ${name}  (${mac})|b! ${mac}${device_meta}"
         devices_found=1
     fi
 done < <(bluetoothctl devices 2>/dev/null)
 
 if [[ "$devices_found" == "0" ]]; then
-    echo "  No devices found (Scan to find more)|"
+    echo "  No devices found (Scan to find more) @meta:nonselectable=true|"
 fi

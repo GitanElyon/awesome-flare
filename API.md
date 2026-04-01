@@ -51,6 +51,37 @@ Lines prefixed with `f! ` are control directives:
 - `f! single <query>|<result>`
 	- Returns a single-result response instead of list mode.
 
+## Row metadata
+
+Row metadata is appended to a directive or row using `@meta:<key>=<value>` tokens.
+
+Example:
+
+```bash
+echo "f! item  Back|Back|PopLastToken @meta:permanent=true @meta:nonselectable=false"
+```
+
+Rules:
+
+- Metadata tokens are appended at the end of the row or directive payload.
+- Multiple metadata tokens may be chained in the same row.
+- If a literal `/@meta` is used at the start of a row, Flare treats it as normal text. 
+
+Supported row metadata keys:
+
+- `display=<text>`
+	- Overrides the visible label for the row.
+- `meta=<terms>`
+	- Adds hidden search terms. Separate multiple terms with commas.
+- `nonselectable=<bool>`
+	- Skips the row during selection movement.
+- `permanent=<bool>`
+	- Keeps the row available for UI flows that preserve permanent rows.
+- `active=<bool>`
+	- Marks the row as active in the UI.
+- `urgent=<bool>`
+	- Marks the row as urgent in the UI.
+
 ## Supported actions
 
 - `CopyToClipboardAndExit`

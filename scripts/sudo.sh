@@ -11,4 +11,4 @@ if [[ -z "$QUERY" ]]; then
     exit 0
 fi
 
-echo "  Run with sudo: ${QUERY}|sudo ${QUERY}"
+echo "  Run with sudo: ${QUERY}|sudo ${QUERY} @meta:urgent=true"

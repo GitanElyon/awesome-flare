@@ -156,7 +156,7 @@ backend="$(detect_backend)"
 if [[ -z "$backend" ]]; then
     echo "f! title  Volume "
     echo "f! action None"
-    echo "  No audio backend found (requires wpctl, pactl, or amixer)|"
+    echo "  No audio backend found (requires wpctl, pactl, or amixer) @meta:nonselectable=true|"
     exit 0
 fi
 
@@ -176,13 +176,13 @@ echo "f! title ${title}"
 
 if [[ "$arg" == "-h" || "$arg" == "--help" || "$arg" == "help" ]]; then
     echo "f! action None"
-    echo "  v!           Open volume menu|"
-    echo "  v! -h        Show this help|"
-    echo "  v! +N        Increase volume by N%   (e.g. v! +10)|"
-    echo "  v! -N        Decrease volume by N%   (e.g. v! -5)|"
-    echo "  v! N         Set volume to N%        (e.g. v! 75)|"
-    echo "  v! mute      Toggle mute|"
-    echo "  v! devices   List and switch output devices|"
+    echo "  v!           Open volume menu @meta:nonselectable=true|"
+    echo "  v! -h        Show this help @meta:nonselectable=true|"
+    echo "  v! +N        Increase volume by N%   (e.g. v! +10) @meta:nonselectable=true|"
+    echo "  v! -N        Decrease volume by N%   (e.g. v! -5) @meta:nonselectable=true|"
+    echo "  v! N         Set volume to N%        (e.g. v! 75) @meta:nonselectable=true|"
+    echo "  v! mute      Toggle mute @meta:nonselectable=true|"
+    echo "  v! devices   List and switch output devices @meta:nonselectable=true|"
     exit 0
 fi
 
@@ -211,7 +211,7 @@ if [[ "$arg" == "devices" || "$arg" == "d" ]]; then
     done < <(list_sinks "$backend")
     if (( local_count == 0 )); then
         echo "f! action None"
-        echo "  No output devices found|"
+        echo "  No output devices found @meta:nonselectable=true|"
     fi
     exit 0
 fi
@@ -240,13 +240,13 @@ fi
 
 echo "f! action ExecuteAndRefresh"
 if [[ "$current_vol" == "-1" ]]; then
-    echo "  Volume status unavailable|"
+    echo "  Volume status unavailable @meta:nonselectable=true|"
 else
     bar="$(volume_bar "$current_vol")"
     if [[ "$muted" == "1" ]]; then
-        echo "  ${current_vol}% ${bar} [MUTED]|"
+        echo "  ${current_vol}% ${bar} [MUTED] @meta:nonselectable=true @meta:urgent=true|"
     else
-        echo "  ${current_vol}% ${bar}|"
+        echo "  ${current_vol}% ${bar} @meta:nonselectable=true @meta:active=true|"
     fi
 fi
 echo "  Volume Up  (+5%)|$(adjust_volume_cmd "$backend" 5)"
@@ -260,4 +260,4 @@ echo "  Set to 25%|$(set_volume_cmd "$backend" 25)"
 echo "  Set to 50%|$(set_volume_cmd "$backend" 50)"
 echo "  Set to 75%|$(set_volume_cmd "$backend" 75)"
 echo "  Set to 100%|$(set_volume_cmd "$backend" 100)"
-echo "  Output Devices (v! devices)|"
+echo "  Output Devices (v! devices) @meta:nonselectable=true @meta:permanent=true|"
