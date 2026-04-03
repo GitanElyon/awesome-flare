@@ -20,9 +20,9 @@ This repository contains a curated catalog of plugins for [qst](https://github.c
 - `clipboard.sh`
 - `help.sh`
 - `runner.sh`
+- `todo.sh`
 - `sudo.sh`
 - `symbols.sh`
-- `symbols.pl`
 - `volume.sh`
 
 ## Install locally

@@ -50,6 +50,14 @@ Lines prefixed with `qst! ` are control directives:
 	- Clears all accumulated rows.
 - `qst! single <query>|<result>`
 	- Returns a single-result response instead of list mode.
+- `qst! write <file>|<WriteAction>|<value>`
+	- Mutates `~/.config/qst/storage/<plugin-name>/<file>`.
+- `qst! read <file>`
+	- Reads the entire file and emits each stored line as a row.
+- `qst! read <file>|<ReadAction>`
+	- Reads the file with the specified action and emits the result as a single row.
+- `qst! delete <file>`
+	- Deletes the stored file.
 
 ## Row metadata
 
@@ -71,6 +79,8 @@ Supported row metadata keys:
 
 - `display=<text>`
 	- Overrides the visible label for the row.
+- `fuzzy=<bool>`
+	- Opts the row into host-side fuzzy filtering. When attached to a title or message directive, it enables fuzzy filtering for all rows in that script response.
 - `meta=<terms>`
 	- Adds hidden search terms. Separate multiple terms with commas.
 - `nonselectable=<bool>`
@@ -84,23 +94,7 @@ Supported row metadata keys:
 
 ## Supported actions
 
-- `CopyToClipboardAndExit`
-- `CopyToClipboard`
-- `SetStatusMessage`
-- `ClearStatusMessage`
-- `SetSearchQuery`
-- `AppendToQuery`
-- `PrependToQuery`
-- `ReplaceLastToken`
-- `PopLastToken`
-- `PopLastChar`
-- `ClearQuery`
-- `RefreshResults`
-- `ExecuteAndExit`
-- `ExecuteAndRefresh`
-- `None`
-
-### Action semantics
+### Main Actions
 
 - `CopyToClipboardAndExit`
 	- Copies value to clipboard and exits qst.
@@ -130,8 +124,34 @@ Supported row metadata keys:
 	- Executes value as a shell command and exits qst.
 - `ExecuteAndRefresh`
 	- Executes value as a shell command and keeps qst open.
+- `ExecuteAndResetPrompt`
+	- Executes value as a shell command, blocks until complete, and resets the search query back to its first token (e.g. `todo n example` becomes `todo `).
 - `None`
 	- No-op action, keeps qst open.
+
+### Write Actions
+
+- `pfront`
+	- Push value to the front of the file.
+- `pback`
+	- Push value to the back of the file.
+- `rmfront`
+	- Remove a line from the front of the file.
+- `rmback`
+	- Remove a line from the back of the file.
+- `purge`
+	- Remove every stored line that exactly matches the provided value.
+
+### Read Actions
+
+- `fpeek`
+	- Read a line from the front of the file without removing it.
+- `bpeek`
+	- Read a line from the back of the file without removing it.
+- `all`
+	- Read the entire file content.
+
+Storage files are created automatically when a write directive targets a missing file.
 
 ## Example
 
