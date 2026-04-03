@@ -3,8 +3,8 @@
 SCRIPT_DIR="$HOME/.config/qst/scripts"
 ALIAS_FILE="$HOME/.config/qst/alias.toml"
 
-echo "f! title  Script Commands "
-echo "f! action None"
+echo "qst! title  Script Commands "
+echo "qst! action None"
 
 declare -A ALIASES
 if [[ -f "$ALIAS_FILE" ]]; then

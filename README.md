@@ -8,7 +8,7 @@ This repository contains a curated catalog of plugins for [qst](https://github.c
 ## What is here
 
 - `scripts/`: plugin scripts used by qst (`*.sh`, `*.pl`, `*.py`, etc.).
-- `API.md`: script protocol reference (`f!` directives, actions, output format).
+- `API.md`: script protocol reference (`qst!` directives, actions, output format).
 - `DOCS.md`: installation, aliases, and authoring guide.
 
 ## Included scripts

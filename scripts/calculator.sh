@@ -167,12 +167,12 @@ numerical_integrate() {
 }
 
 if [[ -z "$expr" ]]; then
-    echo "f! single |"
+    echo "qst! single |"
     exit 0
 fi
 
 if [[ -z "$CALC_BACKEND" ]]; then
-    echo "f! single $expr|Error: install bc, python3, or awk"
+    echo "qst! single $expr|Error: install bc, python3, or awk"
     exit 0
 fi
 
@@ -207,7 +207,7 @@ fi
 
 formatted="$(format_number "$result")"
 if [[ "$formatted" == "" || "$formatted" == "Error" ]]; then
-    echo "f! single $expr|Error"
+    echo "qst! single $expr|Error"
 else
-    echo "f! single $expr|$formatted"
+    echo "qst! single $expr|$formatted"
 fi

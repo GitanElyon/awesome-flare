@@ -41,6 +41,6 @@ Notes:
 
 - Input: script arguments from current query.
 - Output: line-oriented protocol parsed by qst.
-- Control: use `f!` directives for title, actions, item overrides, and single-result mode.
+- Control: use `qst!` directives for title, actions, item overrides, and single-result mode.
 
 Full protocol reference: [API.md](API.md).

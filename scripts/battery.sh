@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-echo "f! title Battery Info"
-echo "f! action None"
+echo "qst! title Battery Info"
+echo "qst! action None"
 
 base="/sys/class/power_supply"
 found=0

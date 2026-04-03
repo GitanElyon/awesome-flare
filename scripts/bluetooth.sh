@@ -3,8 +3,8 @@
 QUERY="${1:-}"
 
 if ! command -v bluetoothctl >/dev/null 2>&1; then
-    echo "f! title  Bluetooth "
-    echo "f! action None"
+    echo "qst! title  Bluetooth "
+    echo "qst! action None"
     echo "  bluetoothctl not found. Please install bluez/bluetoothctl.|"
     exit 0
 fi
@@ -35,8 +35,8 @@ device_info_flags() {
 arg="${QUERY# }"
 
 if [[ "$arg" == "-h" || "$arg" == "--help" || "$arg" == "help" ]]; then
-    echo "f! title  Bluetooth Help "
-    echo "f! action None"
+    echo "qst! title  Bluetooth Help "
+    echo "qst! action None"
     echo "  b!           Open main bluetooth menu|"
     echo "  b! power on  Turn on Bluetooth adapter|"
     echo "  b! power off Turn off Bluetooth adapter|"
@@ -46,29 +46,29 @@ if [[ "$arg" == "-h" || "$arg" == "--help" || "$arg" == "help" ]]; then
 fi
 
 if [[ "$arg" == "power on" ]]; then
-    echo "f! title  Bluetooth Admin "
-    echo "f! action ExecuteAndRefresh"
+    echo "qst! title  Bluetooth Admin "
+    echo "qst! action ExecuteAndRefresh"
     echo "  Powering on...|bluetoothctl power on @meta:urgent=true"
     exit 0
 fi
 
 if [[ "$arg" == "power off" ]]; then
-    echo "f! title  Bluetooth Admin "
-    echo "f! action ExecuteAndRefresh"
+    echo "qst! title  Bluetooth Admin "
+    echo "qst! action ExecuteAndRefresh"
     echo "  Powering off...|bluetoothctl power off @meta:urgent=true"
     exit 0
 fi
 
 if [[ "$arg" == "scan on" ]]; then
-    echo "f! title  Bluetooth Admin "
-    echo "f! action ExecuteAndRefresh"
+    echo "qst! title  Bluetooth Admin "
+    echo "qst! action ExecuteAndRefresh"
     echo "  Starting scan...|bluetoothctl scan on @meta:urgent=true"
     exit 0
 fi
 
 if [[ "$arg" == "scan off" ]]; then
-    echo "f! title  Bluetooth Admin "
-    echo "f! action ExecuteAndRefresh"
+    echo "qst! title  Bluetooth Admin "
+    echo "qst! action ExecuteAndRefresh"
     echo "  Stopping scan...|bluetoothctl scan off @meta:urgent=true"
     exit 0
 fi
@@ -83,9 +83,9 @@ if is_mac "$arg"; then
         status="Paired, Disconnected"
     fi
 
-    echo "f! title  Bluetooth: ${arg} "
-    echo "f! action ExecuteAndRefresh"
-    echo "f! item   <- Back to summary|b! |PopLastToken @meta:permanent=true"
+    echo "qst! title  Bluetooth: ${arg} "
+    echo "qst! action ExecuteAndRefresh"
+    echo "qst! item   <- Back to summary|b! |PopLastToken @meta:permanent=true"
     echo "  [${status}] @meta:nonselectable=true @meta:active=true|"
 
     if [[ "$connected" == "1" ]]; then
@@ -127,8 +127,8 @@ if is_scanning; then
     scan_label="Stop Scanning"
 fi
 
-echo "f! title  Bluetooth "
-echo "f! action SetSearchQuery"
+echo "qst! title  Bluetooth "
+echo "qst! action SetSearchQuery"
 echo "  Power: [${power_status}] -> ${power_label}|${power_target} @meta:urgent=true"
 echo "  Scan:  [${scan_status}] -> ${scan_label}|${scan_target} @meta:urgent=true"
 echo "  ──────────────────────────── @meta:nonselectable=true|"

@@ -59,8 +59,8 @@ is_favorite() {
     grep -q "\"$name\"" "$hist"
 }
 
-echo "f! title Symbols"
-echo "f! action CopyToClipboardAndExit"
+echo "qst! title Symbols"
+echo "qst! action CopyToClipboardAndExit"
 
 count=0
 
@@ -80,7 +80,7 @@ while IFS=$'\t' read -r name symbol; do
         row_meta=""
     fi
 
-    echo "f! item ${title}|${symbol} @meta:meta=unicode,symbol${row_meta}"
+    echo "qst! item ${title}|${symbol} @meta:meta=unicode,symbol${row_meta}"
     
     count=$((count + 1))
     if (( count >= 300 )); then

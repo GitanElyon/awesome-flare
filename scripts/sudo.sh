@@ -2,8 +2,8 @@
 
 QUERY="${1:-}"
 
-echo "f! title Sudo"
-echo "f! action SetSearchQuery"
+echo "qst! title Sudo"
+echo "qst! action SetSearchQuery"
 
 if [[ -z "$QUERY" ]]; then
     echo "  Prefix command with sudo authentication|sudo "

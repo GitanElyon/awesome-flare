@@ -154,8 +154,8 @@ list_sinks() {
 
 backend="$(detect_backend)"
 if [[ -z "$backend" ]]; then
-    echo "f! title  Volume "
-    echo "f! action None"
+    echo "qst! title  Volume "
+    echo "qst! action None"
     echo "  No audio backend found (requires wpctl, pactl, or amixer) @meta:nonselectable=true|"
     exit 0
 fi
@@ -172,10 +172,10 @@ else
 fi
 
 arg="${QUERY# }"
-echo "f! title ${title}"
+echo "qst! title ${title}"
 
 if [[ "$arg" == "-h" || "$arg" == "--help" || "$arg" == "help" ]]; then
-    echo "f! action None"
+    echo "qst! action None"
     echo "  v!           Open volume menu @meta:nonselectable=true|"
     echo "  v! -h        Show this help @meta:nonselectable=true|"
     echo "  v! +N        Increase volume by N%   (e.g. v! +10) @meta:nonselectable=true|"
@@ -187,7 +187,7 @@ if [[ "$arg" == "-h" || "$arg" == "--help" || "$arg" == "help" ]]; then
 fi
 
 if [[ "$arg" == "mute" || "$arg" == "m" ]]; then
-    echo "f! action ExecuteAndRefresh"
+    echo "qst! action ExecuteAndRefresh"
     if [[ "$muted" == "1" ]]; then
         echo "  Unmute|$(mute_toggle_cmd "$backend")"
     else
@@ -197,8 +197,8 @@ if [[ "$arg" == "mute" || "$arg" == "m" ]]; then
 fi
 
 if [[ "$arg" == "devices" || "$arg" == "d" ]]; then
-    echo "f! title  Volume - Output Devices "
-    echo "f! action ExecuteAndRefresh"
+    echo "qst! title  Volume - Output Devices "
+    echo "qst! action ExecuteAndRefresh"
     local_count=0
     while IFS=$'\t' read -r sink_id sink_name; do
         [[ -z "$sink_id" || -z "$sink_name" ]] && continue
@@ -210,7 +210,7 @@ if [[ "$arg" == "devices" || "$arg" == "d" ]]; then
         fi
     done < <(list_sinks "$backend")
     if (( local_count == 0 )); then
-        echo "f! action None"
+        echo "qst! action None"
         echo "  No output devices found @meta:nonselectable=true|"
     fi
     exit 0
@@ -218,14 +218,14 @@ fi
 
 if [[ "$arg" =~ ^\+([0-9]+)$ ]]; then
     delta="${BASH_REMATCH[1]}"
-    echo "f! action ExecuteAndRefresh"
+    echo "qst! action ExecuteAndRefresh"
     echo "  Increase volume by ${delta}%|$(adjust_volume_cmd "$backend" "$delta")"
     exit 0
 fi
 
 if [[ "$arg" =~ ^-([0-9]+)$ ]]; then
     delta="${BASH_REMATCH[1]}"
-    echo "f! action ExecuteAndRefresh"
+    echo "qst! action ExecuteAndRefresh"
     echo "  Decrease volume by ${delta}%|$(adjust_volume_cmd "$backend" "-$delta")"
     exit 0
 fi
@@ -233,12 +233,12 @@ fi
 if [[ "$arg" =~ ^[0-9]+$ ]]; then
     target="$arg"
     if (( target > 150 )); then target=150; fi
-    echo "f! action ExecuteAndRefresh"
+    echo "qst! action ExecuteAndRefresh"
     echo "  Set volume to ${target}%|$(set_volume_cmd "$backend" "$target")"
     exit 0
 fi
 
-echo "f! action ExecuteAndRefresh"
+echo "qst! action ExecuteAndRefresh"
 if [[ "$current_vol" == "-1" ]]; then
     echo "  Volume status unavailable @meta:nonselectable=true|"
 else

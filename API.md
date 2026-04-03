@@ -30,25 +30,25 @@ The broader ecosystem is cataloged in `awesome-qst`:
 
 ## Host directives
 
-Lines prefixed with `f! ` are control directives:
+Lines prefixed with `qst! ` are control directives:
 
-- `f! title <text>`
+- `qst! title <text>`
 	- Sets list title.
-- `f! message <text>`
+- `qst! message <text>`
 	- Sets the status/message line under the input.
-- `f! clear_message`
+- `qst! clear_message`
 	- Clears the status/message line.
-- `f! action <Action>`
+- `qst! action <Action>`
 	- Sets default action for all list rows.
-- `f! item_action <Action>`
+- `qst! item_action <Action>`
 	- Sets action for only the next emitted row.
-- `f! default_item_action <Action>`
+- `qst! default_item_action <Action>`
 	- Sets action for all following rows unless overridden.
-- `f! item <title>|<value>|<Action>`
+- `qst! item <title>|<value>|<Action>`
 	- Emits an explicit row with optional per-item action.
-- `f! clear`
+- `qst! clear`
 	- Clears all accumulated rows.
-- `f! single <query>|<result>`
+- `qst! single <query>|<result>`
 	- Returns a single-result response instead of list mode.
 
 ## Row metadata
@@ -58,7 +58,7 @@ Row metadata is appended to a directive or row using `@meta:<key>=<value>` token
 Example:
 
 ```bash
-echo "f! item  Back|Back|PopLastToken @meta:permanent=true @meta:nonselectable=false"
+echo "qst! item  Back|Back|PopLastToken @meta:permanent=true @meta:nonselectable=false"
 ```
 
 Rules:
@@ -139,13 +139,13 @@ Supported row metadata keys:
 #!/usr/bin/env bash
 query="${1:-}"
 
-echo "f! title  Demo Script "
+echo "qst! title  Demo Script "
 
 if [[ -z "$query" ]]; then
-	echo "f! action None"
+	echo "qst! action None"
 	echo "  Type a command after the trigger|"
 else
-	echo "f! action ExecuteAndExit"
+	echo "qst! action ExecuteAndExit"
 	echo "  Run: $query|$query"
 fi
 ```
