@@ -16,6 +16,7 @@ This repository contains a curated catalog of plugins for [qst](https://github.c
 - `battery.sh`
 - `bluetooth.sh`
 - `brightness.sh`
+- `clock.sh`
 - `calculator.sh`
 - `clipboard.sh`
 - `help.sh`

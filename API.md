@@ -88,9 +88,9 @@ Supported row metadata keys:
 - `permanent=<bool>`
 	- Keeps the row available for UI flows that preserve permanent rows.
 - `active=<bool>`
-	- Marks the row as active in the UI.
+	- Active rows receive a dark gray highlight.
 - `urgent=<bool>`
-	- Marks the row as urgent in the UI.
+	- Urgent rows are moved to the top of the list and rendered in bold red without an inline prefix.
 
 ## Supported actions
 
