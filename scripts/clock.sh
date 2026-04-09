@@ -450,9 +450,9 @@ render_timer_preview() {
 	start_command="$(build_start_command "$duration_text" "$label_text")"
 
 	if [[ "$label_text" != "Timer" ]]; then
-		echo "qst! item  Start timer: ${display_duration} · ${safe_label}|${start_command}|ExecuteAndRefresh"
+		echo "qst! item  Start timer: ${display_duration} · ${safe_label}|${start_command}|Execute,RefreshResults"
 	else
-		echo "qst! item  Start timer: ${display_duration}|${start_command}|ExecuteAndRefresh"
+		echo "qst! item  Start timer: ${display_duration}|${start_command}|Execute,RefreshResults"
 	fi
 }
 
@@ -470,9 +470,9 @@ render_alarm_preview() {
 	start_command="$(build_alarm_command "$time_text" "$label_text")"
 
 	if [[ "$label_text" != "Alarm" ]]; then
-		echo "qst! item  Start alarm: ${normalized_time} · ${safe_label}|${start_command}|ExecuteAndRefresh"
+		echo "qst! item  Start alarm: ${normalized_time} · ${safe_label}|${start_command}|Execute,RefreshResults"
 	else
-		echo "qst! item  Start alarm: ${normalized_time}|${start_command}|ExecuteAndRefresh"
+		echo "qst! item  Start alarm: ${normalized_time}|${start_command}|Execute,RefreshResults"
 	fi
 }
 

@@ -60,7 +60,7 @@ is_favorite() {
 }
 
 echo "qst! title Symbols"
-echo "qst! action CopyToClipboardAndExit"
+echo "qst! action CopyToClipboard,ExitApp"
 
 count=0
 

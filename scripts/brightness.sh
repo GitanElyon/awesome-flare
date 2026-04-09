@@ -76,7 +76,7 @@ if [[ "$arg" =~ ^([A-Za-z0-9._:-]+)[[:space:]]+([0-9]{1,3})$ ]]; then
     fi
 
     echo "qst! title Brightness"
-    echo "qst! action ExecuteAndRefresh"
+    echo "qst! action Execute,RefreshResults"
     echo "  Set ${device} to ${target}%|$(set_brightness_cmd "$device" "$target")"
     exit 0
 fi
@@ -93,10 +93,10 @@ if [[ "$arg" =~ ^([A-Za-z0-9._:-]+)$ ]] && device_exists "$arg"; then
     else
         echo "qst! item  Current: unknown|Current: unknown|None @meta:nonselectable=true"
     fi
-    echo "qst! item  Set to 25%|$(set_brightness_cmd "$device" 25)|ExecuteAndRefresh"
-    echo "qst! item  Set to 50%|$(set_brightness_cmd "$device" 50)|ExecuteAndRefresh"
-    echo "qst! item  Set to 75%|$(set_brightness_cmd "$device" 75)|ExecuteAndRefresh"
-    echo "qst! item  Set to 100%|$(set_brightness_cmd "$device" 100)|ExecuteAndRefresh"
+    echo "qst! item  Set to 25%|$(set_brightness_cmd "$device" 25)|Execute,RefreshResults"
+    echo "qst! item  Set to 50%|$(set_brightness_cmd "$device" 50)|Execute,RefreshResults"
+    echo "qst! item  Set to 75%|$(set_brightness_cmd "$device" 75)|Execute,RefreshResults"
+    echo "qst! item  Set to 100%|$(set_brightness_cmd "$device" 100)|Execute,RefreshResults"
     echo "qst! item  Back to device list|Back to device list|PopLastToken @meta:permanent=true"
     exit 0
 fi

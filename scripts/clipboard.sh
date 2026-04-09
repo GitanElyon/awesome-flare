@@ -42,7 +42,7 @@ emit_raw_item() {
         cmd="tmp=\$(mktemp); base64 -d <<< '$encoded' > \"\$tmp\"; xclip -selection clipboard -in < \"\$tmp\"; rm -f \"\$tmp\""
     fi
 
-    echo "qst! item ${title}|${cmd}|ExecuteAndExit${active_meta}"
+    echo "qst! item ${title}|${cmd}|Execute,ExitApp${active_meta}"
     count=$((count + 1))
 }
 
@@ -71,7 +71,7 @@ emit_cliphist_item() {
         cmd="tmp=\$(mktemp); cliphist decode $id > \"\$tmp\"; xclip -selection clipboard -in < \"\$tmp\"; rm -f \"\$tmp\""
     fi
 
-    echo "qst! item ${title}|${cmd}|ExecuteAndExit"
+    echo "qst! item ${title}|${cmd}|Execute,ExitApp"
     count=$((count + 1))
 }
 

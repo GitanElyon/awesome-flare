@@ -94,10 +94,10 @@ Supported row metadata keys:
 
 ## Supported actions
 
+Actions are evaluated left-to-right and can be combined with commas, for example `CopyToClipboard,ExitApp` or `Execute,RefreshResults`.
+
 ### Main Actions
 
-- `CopyToClipboardAndExit`
-	- Copies value to clipboard and exits qst.
 - `CopyToClipboard`
 	- Copies value to clipboard and keeps qst open.
 - `SetStatusMessage`
@@ -120,12 +120,12 @@ Supported row metadata keys:
 	- Clears the entire query.
 - `RefreshResults`
 	- Re-runs filtering/script resolution without changing query text.
-- `ExecuteAndExit`
-	- Executes value as a shell command and exits qst.
-- `ExecuteAndRefresh`
+- `Execute`
 	- Executes value as a shell command and keeps qst open.
-- `ExecuteAndResetPrompt`
-	- Executes value as a shell command, blocks until complete, and resets the search query back to its first token (e.g. `todo n example` becomes `todo `).
+- `ExitApp`
+	- Exits qst.
+- `ResetPrompt`
+	- Resets the search query back to its first token (e.g. `todo n example` becomes `todo `). If it follows `Execute` in the same action list, it waits for that command to finish first.
 - `None`
 	- No-op action, keeps qst open.
 
@@ -165,7 +165,7 @@ if [[ -z "$query" ]]; then
 	echo "qst! action None"
 	echo "  Type a command after the trigger|"
 else
-	echo "qst! action ExecuteAndExit"
+	echo "qst! action Execute,ExitApp"
 	echo "  Run: $query|$query"
 fi
 ```

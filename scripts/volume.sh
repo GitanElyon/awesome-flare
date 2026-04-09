@@ -187,7 +187,7 @@ if [[ "$arg" == "-h" || "$arg" == "--help" || "$arg" == "help" ]]; then
 fi
 
 if [[ "$arg" == "mute" || "$arg" == "m" ]]; then
-    echo "qst! action ExecuteAndRefresh"
+    echo "qst! action Execute,RefreshResults"
     if [[ "$muted" == "1" ]]; then
         echo "  Unmute|$(mute_toggle_cmd "$backend")"
     else
@@ -198,7 +198,7 @@ fi
 
 if [[ "$arg" == "devices" || "$arg" == "d" ]]; then
     echo "qst! title  Volume - Output Devices "
-    echo "qst! action ExecuteAndRefresh"
+    echo "qst! action Execute,RefreshResults"
     local_count=0
     while IFS=$'\t' read -r sink_id sink_name; do
         [[ -z "$sink_id" || -z "$sink_name" ]] && continue
@@ -218,14 +218,14 @@ fi
 
 if [[ "$arg" =~ ^\+([0-9]+)$ ]]; then
     delta="${BASH_REMATCH[1]}"
-    echo "qst! action ExecuteAndRefresh"
+    echo "qst! action Execute,RefreshResults"
     echo "  Increase volume by ${delta}%|$(adjust_volume_cmd "$backend" "$delta")"
     exit 0
 fi
 
 if [[ "$arg" =~ ^-([0-9]+)$ ]]; then
     delta="${BASH_REMATCH[1]}"
-    echo "qst! action ExecuteAndRefresh"
+    echo "qst! action Execute,RefreshResults"
     echo "  Decrease volume by ${delta}%|$(adjust_volume_cmd "$backend" "-$delta")"
     exit 0
 fi
@@ -233,12 +233,12 @@ fi
 if [[ "$arg" =~ ^[0-9]+$ ]]; then
     target="$arg"
     if (( target > 150 )); then target=150; fi
-    echo "qst! action ExecuteAndRefresh"
+    echo "qst! action Execute,RefreshResults"
     echo "  Set volume to ${target}%|$(set_volume_cmd "$backend" "$target")"
     exit 0
 fi
 
-echo "qst! action ExecuteAndRefresh"
+echo "qst! action Execute,RefreshResults"
 if [[ "$current_vol" == "-1" ]]; then
     echo "  Volume status unavailable @meta:nonselectable=true|"
 else

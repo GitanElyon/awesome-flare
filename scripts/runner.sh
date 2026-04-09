@@ -9,5 +9,5 @@ if [[ -z "$QUERY" ]]; then
     exit 0
 fi
 
-echo "qst! action ExecuteAndExit"
+echo "qst! action Execute,ExitApp"
 echo "  ▶  Run: ${QUERY}|${QUERY}"

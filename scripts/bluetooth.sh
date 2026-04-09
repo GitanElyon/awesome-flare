@@ -47,28 +47,28 @@ fi
 
 if [[ "$arg" == "power on" ]]; then
     echo "qst! title  Bluetooth Admin "
-    echo "qst! action ExecuteAndRefresh"
+    echo "qst! action Execute,RefreshResults"
     echo "  Powering on...|bluetoothctl power on @meta:urgent=true"
     exit 0
 fi
 
 if [[ "$arg" == "power off" ]]; then
     echo "qst! title  Bluetooth Admin "
-    echo "qst! action ExecuteAndRefresh"
+    echo "qst! action Execute,RefreshResults"
     echo "  Powering off...|bluetoothctl power off @meta:urgent=true"
     exit 0
 fi
 
 if [[ "$arg" == "scan on" ]]; then
     echo "qst! title  Bluetooth Admin "
-    echo "qst! action ExecuteAndRefresh"
+    echo "qst! action Execute,RefreshResults"
     echo "  Starting scan...|bluetoothctl scan on @meta:urgent=true"
     exit 0
 fi
 
 if [[ "$arg" == "scan off" ]]; then
     echo "qst! title  Bluetooth Admin "
-    echo "qst! action ExecuteAndRefresh"
+    echo "qst! action Execute,RefreshResults"
     echo "  Stopping scan...|bluetoothctl scan off @meta:urgent=true"
     exit 0
 fi
@@ -84,7 +84,7 @@ if is_mac "$arg"; then
     fi
 
     echo "qst! title  Bluetooth: ${arg} "
-    echo "qst! action ExecuteAndRefresh"
+    echo "qst! action Execute,RefreshResults"
     echo "qst! item   <- Back to summary|b! |PopLastToken @meta:permanent=true"
     echo "  [${status}] @meta:nonselectable=true @meta:active=true|"
 
