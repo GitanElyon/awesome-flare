@@ -5,7 +5,7 @@ QUERY="${1:-}"
 if ! command -v brightnessctl >/dev/null 2>&1; then
     echo "qst! title Brightness"
     echo "qst! action None"
-    echo "  No brightness backend found (need brightnessctl)|"
+    echo "  No brightness backend found (need brightnessctl) @meta:center=true|"
     exit 0
 fi
 
@@ -89,9 +89,9 @@ if [[ "$arg" =~ ^([A-Za-z0-9._:-]+)$ ]] && device_exists "$arg"; then
     echo "qst! title Brightness - ${safe_device}"
     echo "qst! action None"
     if [[ -n "$current_pct" ]]; then
-        echo "qst! item  Current: ${current_pct}%|Current: ${current_pct}%|None @meta:nonselectable=true @meta:active=true"
+        echo "qst! item  Current: ${current_pct}%|Current: ${current_pct}%|None @meta:nonselectable=true @meta:active=true @meta:center=true"
     else
-        echo "qst! item  Current: unknown|Current: unknown|None @meta:nonselectable=true"
+        echo "qst! item  Current: unknown|Current: unknown|None @meta:nonselectable=true @meta:center=true"
     fi
     echo "qst! item  Set to 25%|$(set_brightness_cmd "$device" 25)|Execute,RefreshResults"
     echo "qst! item  Set to 50%|$(set_brightness_cmd "$device" 50)|Execute,RefreshResults"
@@ -127,8 +127,8 @@ done < <(list_devices)
 
 if (( count == 0 )); then
     if [[ -n "$arg" ]]; then
-        echo "  No matching brightness devices for: $arg|"
+        echo "  No matching brightness devices for: $arg @meta:center=true|"
     else
-        echo "  No brightness devices detected|"
+        echo "  No brightness devices detected @meta:center=true|"
     fi
 fi

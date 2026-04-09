@@ -89,6 +89,8 @@ Supported row metadata keys:
 	- Keeps the row available for UI flows that preserve permanent rows.
 - `active=<bool>`
 	- Active rows receive a dark gray highlight.
+- `center=<bool>`
+	- Centers the row within the available text area.
 - `urgent=<bool>`
 	- Urgent rows are moved to the top of the list and rendered in bold red without an inline prefix.
 

@@ -42,7 +42,7 @@ if [[ -f "$ALIAS_FILE" ]]; then
 fi
 
 if [[ ! -d "$SCRIPT_DIR" ]]; then
-	echo "  No script directory found at $SCRIPT_DIR|"
+	echo "  No script directory found at $SCRIPT_DIR @meta:center=true|"
 	exit 0
 fi
 
@@ -61,5 +61,5 @@ while IFS= read -r script; do
 	fi
 done < <(find "$SCRIPT_DIR" -maxdepth 1 -type f -name '*.sh' -executable 2>/dev/null | sort)
 if [[ "$found" == "0" ]]; then
-	echo "  No executable scripts found in $SCRIPT_DIR|"
+	echo "  No executable scripts found in $SCRIPT_DIR @meta:center=true|"
 fi

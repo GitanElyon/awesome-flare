@@ -5,7 +5,7 @@ QUERY="${1:-}"
 if ! command -v bluetoothctl >/dev/null 2>&1; then
     echo "qst! title  Bluetooth "
     echo "qst! action None"
-    echo "  bluetoothctl not found. Please install bluez/bluetoothctl.|"
+    echo "  bluetoothctl not found. Please install bluez/bluetoothctl. @meta:center=true|"
     exit 0
 fi
 
@@ -86,7 +86,7 @@ if is_mac "$arg"; then
     echo "qst! title  Bluetooth: ${arg} "
     echo "qst! action Execute,RefreshResults"
     echo "qst! item   <- Back to summary|b! |PopLastToken @meta:permanent=true"
-    echo "  [${status}] @meta:nonselectable=true @meta:active=true|"
+    echo "  [${status}] @meta:nonselectable=true @meta:active=true @meta:center=true|"
 
     if [[ "$connected" == "1" ]]; then
         echo "  Disconnect|bluetoothctl disconnect ${arg} @meta:urgent=true"
@@ -131,7 +131,7 @@ echo "qst! title  Bluetooth "
 echo "qst! action SetSearchQuery"
 echo "  Power: [${power_status}] -> ${power_label}|${power_target} @meta:urgent=true"
 echo "  Scan:  [${scan_status}] -> ${scan_label}|${scan_target} @meta:urgent=true"
-echo "  ──────────────────────────── @meta:nonselectable=true|"
+echo "  ──────────────────────────── @meta:nonselectable=true @meta:center=true|"
 
 devices_found=0
 while IFS= read -r line; do
@@ -150,5 +150,5 @@ while IFS= read -r line; do
 done < <(bluetoothctl devices 2>/dev/null)
 
 if [[ "$devices_found" == "0" ]]; then
-    echo "  No devices found (Scan to find more) @meta:nonselectable=true|"
+    echo "  No devices found (Scan to find more) @meta:nonselectable=true @meta:center=true|"
 fi

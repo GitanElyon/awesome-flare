@@ -156,7 +156,7 @@ backend="$(detect_backend)"
 if [[ -z "$backend" ]]; then
     echo "qst! title  Volume "
     echo "qst! action None"
-    echo "  No audio backend found (requires wpctl, pactl, or amixer) @meta:nonselectable=true|"
+    echo "  No audio backend found (requires wpctl, pactl, or amixer) @meta:nonselectable=true @meta:center=true|"
     exit 0
 fi
 
@@ -211,7 +211,7 @@ if [[ "$arg" == "devices" || "$arg" == "d" ]]; then
     done < <(list_sinks "$backend")
     if (( local_count == 0 )); then
         echo "qst! action None"
-        echo "  No output devices found @meta:nonselectable=true|"
+        echo "  No output devices found @meta:nonselectable=true @meta:center=true|"
     fi
     exit 0
 fi
@@ -240,13 +240,13 @@ fi
 
 echo "qst! action Execute,RefreshResults"
 if [[ "$current_vol" == "-1" ]]; then
-    echo "  Volume status unavailable @meta:nonselectable=true|"
+    echo "  Volume status unavailable @meta:nonselectable=true @meta:center=true|"
 else
     bar="$(volume_bar "$current_vol")"
     if [[ "$muted" == "1" ]]; then
-        echo "  ${current_vol}% ${bar} [MUTED] @meta:nonselectable=true @meta:urgent=true|"
+        echo "  ${current_vol}% ${bar} [MUTED] @meta:nonselectable=true @meta:urgent=true @meta:center=true|"
     else
-        echo "  ${current_vol}% ${bar} @meta:nonselectable=true @meta:active=true|"
+        echo "  ${current_vol}% ${bar} @meta:nonselectable=true @meta:active=true @meta:center=true|"
     fi
 fi
 echo "  Volume Up  (+5%)|$(adjust_volume_cmd "$backend" 5)"
@@ -260,4 +260,4 @@ echo "  Set to 25%|$(set_volume_cmd "$backend" 25)"
 echo "  Set to 50%|$(set_volume_cmd "$backend" 50)"
 echo "  Set to 75%|$(set_volume_cmd "$backend" 75)"
 echo "  Set to 100%|$(set_volume_cmd "$backend" 100)"
-echo "  Output Devices (v! devices) @meta:nonselectable=true @meta:permanent=true|"
+echo "  Output Devices (v! devices) @meta:nonselectable=true @meta:permanent=true @meta:center=true|"

@@ -149,19 +149,19 @@ emit_clock_rows() {
 				3) output+="${third_part} " ;;
 		esac
 		done
-		printf 'qst! item  %s|%s|None @meta:nonselectable=true\n' "$output" "$output"
+		printf 'qst! item  %s|%s|None @meta:nonselectable=true @meta:center=true\n' "$output" "$output"
 	done
 }
 
 emit_date_line() {
 	local date_text
 	date_text="$(date '+%a, %d %b %Y')"
-	echo "qst! item  ${date_text}|${date_text}|None @meta:nonselectable=true"
+	echo "qst! item  ${date_text}|${date_text}|None @meta:nonselectable=true @meta:center=true"
 }
 
 emit_separator() {
 	local line='───────────────────────────'
-	echo "qst! item  ${line}|${line}|None @meta:nonselectable=true"
+	echo "qst! item  ${line}|${line}|None @meta:nonselectable=true @meta:center=true"
 }
 
 parse_alarm_query() {
@@ -241,7 +241,7 @@ emit_timers() {
 	done < <(read_timers | sort -n -k2,2)
 
 	if (( count == 0 )); then
-		printf 'qst! item  No running timers|No running timers|None @meta:nonselectable=true\n'
+		printf 'qst! item  No running timers|No running timers|None @meta:nonselectable=true @meta:center=true\n'
 	fi
 }
 
@@ -267,7 +267,7 @@ emit_alarms() {
 	done < <(read_alarms | sort -n -k2,2)
 
 	if (( count == 0 )); then
-		printf 'qst! item  No scheduled alarms|No scheduled alarms|None @meta:nonselectable=true\n'
+		printf 'qst! item  No scheduled alarms|No scheduled alarms|None @meta:nonselectable=true @meta:center=true\n'
 	fi
 }
 
@@ -441,7 +441,7 @@ render_timer_preview() {
 	local label_text="${2:-Timer}"
 	local duration_seconds display_duration start_command safe_label
 	if ! duration_seconds="$(parse_duration "$duration_text")"; then
-		echo 'qst! item  Type a duration (XXhYYmZZs)|Type a duration (XXhYYmZZs)|None @meta:nonselectable=true'
+		echo 'qst! item  Type a duration (XXhYYmZZs)|Type a duration (XXhYYmZZs)|None @meta:nonselectable=true @meta:center=true'
 		return 0
 	fi
 
@@ -462,7 +462,7 @@ render_alarm_preview() {
 	local normalized_time start_command safe_label
 
 	if ! normalized_time="$(parse_alarm_time "$time_text")"; then
-		echo 'qst! item  Type an alarm time (HH or HHhMMm or HH:MM)|Type an alarm time (HH or HHhMMm or HH:MM)|None @meta:nonselectable=true'
+		echo 'qst! item  Type an alarm time (HH or HHhMMm or HH:MM)|Type an alarm time (HH or HHhMMm or HH:MM)|None @meta:nonselectable=true @meta:center=true'
 		return 0
 	fi
 
@@ -527,7 +527,7 @@ main() {
 		if [[ -n "${time_text:-}" ]]; then
 			render_alarm_preview "$time_text" "${label_text:-Alarm}"
 		else
-			echo 'qst! item  Type an alarm time (HH or HHhMMm or HH:MM)|Type an alarm time (HH or HHhMMm or HH:MM)|None @meta:nonselectable=true'
+			echo 'qst! item  Type an alarm time (HH or HHhMMm or HH:MM)|Type an alarm time (HH or HHhMMm or HH:MM)|None @meta:nonselectable=true @meta:center=true'
 		fi
 		emit_separator
 		emit_timers
@@ -549,7 +549,7 @@ main() {
 		if [[ -n "${duration_text:-}" ]]; then
 			render_timer_preview "$duration_text" "${label_text:-Timer}"
 		else
-			echo 'qst! item  Type a duration (XXhYYmZZs)|Type a duration (XXhYYmZZs)|None @meta:nonselectable=true'
+			echo 'qst! item  Type a duration (XXhYYmZZs)|Type a duration (XXhYYmZZs)|None @meta:nonselectable=true @meta:center=true'
 		fi
 		emit_separator
 		emit_timers

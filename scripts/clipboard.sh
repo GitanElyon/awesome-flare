@@ -109,5 +109,5 @@ fi
 
 if (( count == 0 )); then
     echo "qst! action None"
-    echo "  No clipboard entries found|"
+    echo "  No clipboard entries found @meta:center=true|"
 fi
