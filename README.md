@@ -20,6 +20,7 @@ This repository contains a curated catalog of plugins for [qst](https://github.c
 - `calculator.sh`
 - `clipboard.sh`
 - `help.sh`
+- `loader.sh`
 - `runner.sh`
 - `todo.sh`
 - `sudo.sh`
