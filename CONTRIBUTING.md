@@ -18,15 +18,14 @@ Each script should be self-contained and smetahould not rely on other scripts un
 
 ### Metadata
 
-At the top each script should contain several lines outputing the script's name, version and author as its own `qst!` directive. A description is recommended but optional. This metadata is used by `help.sh` to display script information.
+At the top each script should contain a metadata line that declares the script's name, version, author, and optional description. This metadata is used by `help.sh` and `loader.sh` to display script information.
 
 Example:
 ```bash
-echo "qst! meta_name My Awesome script"
-echo "qst! meta_version 1.0.0"
-echo "qst! meta_author John Doe"
-echo "qst! meta_description This script does awesome things!"
+echo "qst! meta My Script, 1.0.0, Your Name, A brief description of what the script does"
 ```
+
+Scripts can also emit `qst! meta name`, `qst! meta version`, `qst! meta author`, or `qst! meta description` after the header if they need one field for their own UI.
 ## Script Protocol
 
 Scripts in `awesome-qst` communicate with the host application (qst) using a line-oriented protocol. Each line of output from a script is parsed by qst to determine how to update the UI, what actions to set, and how to respond to user input.

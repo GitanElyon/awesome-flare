@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo "qst! meta Battery Info, 1.0.0, GitanElyon, Shows battery status and health."
 
 echo "qst! title Battery Info"
 echo "qst! action None"

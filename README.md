@@ -11,6 +11,8 @@ This repository contains a curated catalog of plugins for [qst](https://github.c
 - `API.md`: script protocol reference (`qst!` directives, actions, output format).
 - `DOCS.md`: installation, aliases, and authoring guide.
 
+Scripts can also declare a metadata header with `qst! meta name,version,author,description`. qst recognizes the same header at runtime, and `help.sh` and `loader.sh` can surface richer details from it.
+
 ## Included scripts
 
 - `battery.sh`

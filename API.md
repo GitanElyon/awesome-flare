@@ -59,6 +59,32 @@ Lines prefixed with `qst! ` are control directives:
 - `qst! delete <file>`
 	- Deletes the stored file.
 
+## Script metadata
+
+Scripts can declare a metadata header near the top of the file:
+
+```bash
+echo "qst! meta My Awesome script, 1.0.0, John Doe, This script does awesome things!"
+```
+
+The fields are, in order:
+
+- `name`
+- `version`
+- `author`
+- `description`
+
+The header is parsed by qst as a first-class directive, so scripts can also ask for one field at a time after the header has been emitted:
+
+- `qst! meta name`
+- `qst! meta version`
+- `qst! meta author`
+- `qst! meta description`
+
+Helper scripts such as `help.sh` and `loader.sh` can read the same header to surface script details in their own UI, and they can also use the selector form when they want a single metadata field in a response.
+
+Use the selector form when you want to work with one field from the metadata header.
+
 ## Row metadata
 
 Row metadata is appended to a directive or row using `@meta:<key>=<value>` tokens.

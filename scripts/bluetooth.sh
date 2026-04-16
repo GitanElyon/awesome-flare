@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo "qst! meta Bluetooth, 1.0.0, GitanElyon, Manages Bluetooth devices and adapter state."
 
 QUERY="${1:-}"
 
@@ -37,11 +38,11 @@ arg="${QUERY# }"
 if [[ "$arg" == "-h" || "$arg" == "--help" || "$arg" == "help" ]]; then
     echo "qst! title  Bluetooth Help "
     echo "qst! action None"
-    echo "  b!           Open main bluetooth menu|"
-    echo "  b! power on  Turn on Bluetooth adapter|"
-    echo "  b! power off Turn off Bluetooth adapter|"
-    echo "  b! scan on   Start scanning for devices|"
-    echo "  b! scan off  Stop scanning|"
+    echo "  bluetooth           Open main bluetooth menu|"
+    echo "  bluetooth power on  Turn on Bluetooth adapter|"
+    echo "  bluetooth power off Turn off Bluetooth adapter|"
+    echo "  bluetooth scan on   Start scanning for devices|"
+    echo "  bluetooth scan off  Stop scanning|"
     exit 0
 fi
 
@@ -85,7 +86,7 @@ if is_mac "$arg"; then
 
     echo "qst! title  Bluetooth: ${arg} "
     echo "qst! action Execute,RefreshResults"
-    echo "qst! item   <- Back to summary|b! |PopLastToken @meta:permanent=true"
+    echo "qst! item   <- Back to summary|bluetooth |PopLastToken @meta:permanent=true"
     echo "  [${status}] @meta:nonselectable=true @meta:active=true @meta:center=true|"
 
     if [[ "$connected" == "1" ]]; then
@@ -110,20 +111,20 @@ fi
 
 power_status="OFF"
 scan_status="OFF"
-power_target="b! power on"
-scan_target="b! scan on"
+power_target="bluetooth power on"
+scan_target="bluetooth scan on"
 power_label="Enable Bluetooth"
 scan_label="Scan for Devices"
 
 if is_powered; then
     power_status="ON"
-    power_target="b! power off"
+    power_target="bluetooth power off"
     power_label="Disable Bluetooth"
 fi
 
 if is_scanning; then
     scan_status="ON"
-    scan_target="b! scan off"
+    scan_target="bluetooth scan off"
     scan_label="Stop Scanning"
 fi
 
@@ -144,7 +145,7 @@ while IFS= read -r line; do
         if [[ "$connected" == "1" ]]; then
             device_meta="${device_meta} @meta:active=true"
         fi
-        echo "  ${name}  (${mac})|b! ${mac}${device_meta}"
+        echo "  ${name}  (${mac})|bluetooth ${mac}${device_meta}"
         devices_found=1
     fi
 done < <(bluetoothctl devices 2>/dev/null)

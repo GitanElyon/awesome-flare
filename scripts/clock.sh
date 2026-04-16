@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo "qst! meta Clock, 1.0.0, GitanElyon, Shows clocks, timers, and alarms."
 set -euo pipefail
 
 SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"

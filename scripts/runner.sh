@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo "qst! meta Run Command, 1.0.0, GitanElyon, Runs an arbitrary shell command."
 
 QUERY="${1:-}"
 echo "qst! title  Run Command "

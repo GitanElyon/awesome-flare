@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo "qst! meta Plugin Loader, 1.0.0, GitanElyon, Browses and installs awesome-qst scripts."
 set -euo pipefail
 
 SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"
@@ -31,6 +32,42 @@ sanitize_text() {
 	value="${value//$'\n'/ }"
 	value="${value//|/¦}"
 	printf '%s' "$value"
+}
+
+read_script_metadata() {
+	local script_path="$1"
+	local line name version author description
+
+	line="$(sed -n 's/^echo "qst! meta //p' "$script_path" 2>/dev/null | head -n1)"
+	[[ -n "$line" ]] || return 1
+	line="${line%\"}"
+	IFS=',' read -r name version author description <<< "$line"
+	printf '%s\t%s\t%s\t%s' \
+		"$(sanitize_text "$(trim "$name")")" \
+		"$(sanitize_text "$(trim "$version")")" \
+		"$(sanitize_text "$(trim "$author")")" \
+		"$(sanitize_text "$(trim "$description")")"
+}
+
+emit_script_metadata_rows() {
+	local script_path="$1"
+	local meta name version author description
+
+	meta="$(read_script_metadata "$script_path")" || return 0
+	IFS=$'\t' read -r name version author description <<< "$meta"
+
+	if [[ -n "$name" ]]; then
+		echo "  Name: ${name}|${name}|None @meta:nonselectable=true"
+	fi
+	if [[ -n "$version" ]]; then
+		echo "  Version: ${version}|${version}|None @meta:nonselectable=true"
+	fi
+	if [[ -n "$author" ]]; then
+		echo "  Author: ${author}|${author}|None @meta:nonselectable=true"
+	fi
+	if [[ -n "$description" ]]; then
+		echo "  Description: ${description}|${description}|None @meta:nonselectable=true"
+	fi
 }
 
 quote_shell_args() {
@@ -548,8 +585,9 @@ render_browse() {
 
 render_summary() {
 	local path="$1"
-	local alias installed
+	local alias installed local_path
 	path="${path#scripts/}"
+	local_path="$(local_script_path "$path")"
 	alias="$(alias_for_path "$path")"
 	installed="no"
 	if is_installed "$path"; then
@@ -564,6 +602,9 @@ render_summary() {
 		echo "  Alias: ${alias}|${alias}|None @meta:nonselectable=true"
 	else
 		echo "  Alias: (none)|Alias: (none)|None @meta:nonselectable=true"
+	fi
+	if [[ -f "$local_path" ]]; then
+		emit_script_metadata_rows "$local_path"
 	fi
 	echo "qst! item  Install|$(quote_shell_args "$SCRIPT_PATH" u "$path")|Execute,RefreshResults"
 	if [[ "$installed" == "yes" ]]; then
@@ -601,6 +642,9 @@ render_info() {
 	echo "  Script: ${path}|${path}|None @meta:nonselectable=true"
 	echo "  Remote: ${remote_url}|${remote_url}|None @meta:nonselectable=true"
 	echo "  Local: ${local_path}|${local_path}|None @meta:nonselectable=true"
+	if [[ -f "$local_path" ]]; then
+		emit_script_metadata_rows "$local_path"
+	fi
 	echo "qst! item  Install|$(quote_shell_args "$SCRIPT_PATH" u "$path")|Execute,RefreshResults"
 	if [[ "$installed" == "yes" ]]; then
 		echo "qst! item  Remove|$(quote_shell_args "$SCRIPT_PATH" r "$path")|Execute,RefreshResults"

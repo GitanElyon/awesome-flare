@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo "qst! meta Volume, 1.0.0, GitanElyon, Adjusts audio volume."
 QUERY="${1:-}"
 
 command_exists() {

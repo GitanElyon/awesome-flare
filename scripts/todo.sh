@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo "qst! meta Todo, 1.0.0, GitanElyon, Manages a simple todo list."
 set -euo pipefail
 
 SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"

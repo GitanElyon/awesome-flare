@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo "qst! meta Clipboard, 1.0.0, GitanElyon, Browses clipboard history."
 
 QUERY="${1:-}"
 echo "qst! title Clipboard History"

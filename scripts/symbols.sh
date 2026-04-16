@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo "qst! meta Symbols, 1.0.0, GitanElyon, Searches and inserts symbols."
 
 QUERY="${1:-}"
 query_lc="${QUERY,,}"

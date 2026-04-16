@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo "qst! meta Calculator, 1.0.0, GitanElyon, Evaluates quick arithmetic expressions."
 
 QUERY="${1:-}"
 expr="$(echo "$QUERY" | sed -E 's/^[[:space:]]+|[[:space:]]+$//g')"
