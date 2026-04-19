@@ -8,11 +8,32 @@ Either open a pull request with your changes or open an issue to discuss new ide
 
 When contributing scripts, please ensure they follow the protocol outlined in `API.md` and include documentation in `DOCS.md` if necessary.
 
+## Script standards
+
+Every script added to this pack should meet the following baseline standards:
+
+- Be self-contained and focused on one task.
+- Start with a metadata line in the format described in `API.md` so `help.sh` and `loader.sh` can identify the script.
+- Accept the current query payload through script arguments and handle empty input cleanly.
+- Support a `h` or `--help` style help path, and a `v` or `--version` path when it makes sense for the script.
+- Emit only qst-compatible line-oriented output on stdout; keep stray logging, debugging, and errors off the normal output stream.
+- Use `qst!` directives consistently for titles, messages, actions, item overrides, and storage operations.
+- Document any non-obvious behavior, required dependencies, or external state in `DOCS.md`.
+- Preserve backward compatibility when possible, especially for metadata fields, aliases, and action names.
+- Prefer portable shell or interpreter features that work with the supported script styles listed in `API.md`.
+- Fail clearly when required dependencies are missing or when the script cannot complete its task.
+
+Scripts that manage persistent state should also follow these rules:
+
+- Use the qst storage directives instead of inventing a private storage format when qst already provides the needed behavior.
+- Keep stored values stable and predictable so helper scripts and future changes can read them safely.
+- Avoid destructive writes unless the user explicitly requested a destructive action.
+
 # Script Architecture
 
 The `awesome-qst` script pack is designed to be modular and extensible. Each script is a separate module that can be easily added, removed, or updated without affecting the overall functionality of the pack. That being said, there are some guidelines to follow when creating new scripts:
 
-Each script should be self-contained and smetahould not rely on other scripts unless absolutely necessary. If a script does depend on another script, it should clearly document this dependency in its documentation.
+Each script should be self-contained and should not rely on other scripts unless absolutely necessary. If a script does depend on another script, it should clearly document this dependency in its documentation.
 
 ## Script Requirements
 
