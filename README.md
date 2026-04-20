@@ -24,6 +24,7 @@ Scripts can also declare a metadata header with `qst! meta name,version,author,d
 - `help.sh`
 - `loader.sh`
 - `runner.sh`
+- `system.sh`
 - `todo.sh`
 - `sudo.sh`
 - `symbols.sh`
