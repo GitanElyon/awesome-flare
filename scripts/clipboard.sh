@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
+echo "qst! meta Clipboard, 1.0.0, GitanElyon, Browses clipboard history."
 
 QUERY="${1:-}"
-echo "f! title Clipboard History"
+echo "qst! title Clipboard History"
 
 copy_backend=""
 if command -v wl-copy >/dev/null 2>&1; then
@@ -11,7 +12,7 @@ elif command -v xclip >/dev/null 2>&1; then
 fi
 
 if [[ -z "$copy_backend" ]]; then
-    echo "f! action None"
+    echo "qst! action None"
     echo "  No clipboard writer found (need wl-copy or xclip)|"
     exit 0
 fi
@@ -42,7 +43,7 @@ emit_raw_item() {
         cmd="tmp=\$(mktemp); base64 -d <<< '$encoded' > \"\$tmp\"; xclip -selection clipboard -in < \"\$tmp\"; rm -f \"\$tmp\""
     fi
 
-    echo "f! item ${title}|${cmd}|ExecuteAndExit${active_meta}"
+    echo "qst! item ${title}|${cmd}|Execute,ExitApp${active_meta}"
     count=$((count + 1))
 }
 
@@ -71,7 +72,7 @@ emit_cliphist_item() {
         cmd="tmp=\$(mktemp); cliphist decode $id > \"\$tmp\"; xclip -selection clipboard -in < \"\$tmp\"; rm -f \"\$tmp\""
     fi
 
-    echo "f! item ${title}|${cmd}|ExecuteAndExit"
+    echo "qst! item ${title}|${cmd}|Execute,ExitApp"
     count=$((count + 1))
 }
 
@@ -108,6 +109,6 @@ elif command -v copyq >/dev/null 2>&1; then
 fi
 
 if (( count == 0 )); then
-    echo "f! action None"
-    echo "  No clipboard entries found|"
+    echo "qst! action None"
+    echo "  No clipboard entries found @meta:center=true|"
 fi

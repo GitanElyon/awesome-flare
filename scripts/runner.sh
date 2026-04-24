@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
+echo "qst! meta Run Command, 1.0.0, GitanElyon, Runs an arbitrary shell command."
 
 QUERY="${1:-}"
-echo "f! title  Run Command "
+echo "qst! title  Run Command "
 
 if [[ -z "$QUERY" ]]; then
-    echo "f! action None"
+    echo "qst! action None"
     echo "  Type a command to run…|"
     exit 0
 fi
 
-echo "f! action ExecuteAndExit"
+echo "qst! action Execute,ExitApp"
 echo "  ▶  Run: ${QUERY}|${QUERY}"

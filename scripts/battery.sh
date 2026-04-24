@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
+echo "qst! meta Battery Info, 1.0.0, GitanElyon, Shows battery status and health."
 
-echo "f! title Battery Info"
-echo "f! action None"
+echo "qst! title Battery Info"
+echo "qst! action None"
 
 base="/sys/class/power_supply"
 found=0

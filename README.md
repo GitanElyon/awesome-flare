@@ -8,21 +8,26 @@ This repository contains a curated catalog of plugins for [qst](https://github.c
 ## What is here
 
 - `scripts/`: plugin scripts used by qst (`*.sh`, `*.pl`, `*.py`, etc.).
-- `API.md`: script protocol reference (`f!` directives, actions, output format).
+- `API.md`: script protocol reference (`qst!` directives, actions, output format).
 - `DOCS.md`: installation, aliases, and authoring guide.
+
+Scripts can also declare a metadata header with `qst! meta name,version,author,description`. qst recognizes the same header at runtime, and `help.sh` and `loader.sh` can surface richer details from it.
 
 ## Included scripts
 
 - `battery.sh`
 - `bluetooth.sh`
 - `brightness.sh`
+- `clock.sh`
 - `calculator.sh`
 - `clipboard.sh`
 - `help.sh`
+- `loader.sh`
 - `runner.sh`
+- `system.sh`
+- `todo.sh`
 - `sudo.sh`
 - `symbols.sh`
-- `symbols.pl`
 - `volume.sh`
 
 ## Install locally

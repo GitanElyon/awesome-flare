@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
+echo "qst! meta Sudo, 1.0.0, GitanElyon, Runs commands with elevated privileges."
 
 QUERY="${1:-}"
 
-echo "f! title Sudo"
-echo "f! action SetSearchQuery"
+echo "qst! title Sudo"
+echo "qst! action SetSearchQuery"
 
 if [[ -z "$QUERY" ]]; then
     echo "  Prefix command with sudo authentication|sudo "

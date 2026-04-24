@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo "qst! meta Volume, 1.0.0, GitanElyon, Adjusts audio volume."
 QUERY="${1:-}"
 
 command_exists() {
@@ -154,9 +155,9 @@ list_sinks() {
 
 backend="$(detect_backend)"
 if [[ -z "$backend" ]]; then
-    echo "f! title  Volume "
-    echo "f! action None"
-    echo "  No audio backend found (requires wpctl, pactl, or amixer) @meta:nonselectable=true|"
+    echo "qst! title  Volume "
+    echo "qst! action None"
+    echo "  No audio backend found (requires wpctl, pactl, or amixer) @meta:nonselectable=true @meta:center=true|"
     exit 0
 fi
 
@@ -172,10 +173,10 @@ else
 fi
 
 arg="${QUERY# }"
-echo "f! title ${title}"
+echo "qst! title ${title}"
 
 if [[ "$arg" == "-h" || "$arg" == "--help" || "$arg" == "help" ]]; then
-    echo "f! action None"
+    echo "qst! action None"
     echo "  v!           Open volume menu @meta:nonselectable=true|"
     echo "  v! -h        Show this help @meta:nonselectable=true|"
     echo "  v! +N        Increase volume by N%   (e.g. v! +10) @meta:nonselectable=true|"
@@ -187,7 +188,7 @@ if [[ "$arg" == "-h" || "$arg" == "--help" || "$arg" == "help" ]]; then
 fi
 
 if [[ "$arg" == "mute" || "$arg" == "m" ]]; then
-    echo "f! action ExecuteAndRefresh"
+    echo "qst! action Execute,RefreshResults"
     if [[ "$muted" == "1" ]]; then
         echo "  Unmute|$(mute_toggle_cmd "$backend")"
     else
@@ -197,8 +198,8 @@ if [[ "$arg" == "mute" || "$arg" == "m" ]]; then
 fi
 
 if [[ "$arg" == "devices" || "$arg" == "d" ]]; then
-    echo "f! title  Volume - Output Devices "
-    echo "f! action ExecuteAndRefresh"
+    echo "qst! title  Volume - Output Devices "
+    echo "qst! action Execute,RefreshResults"
     local_count=0
     while IFS=$'\t' read -r sink_id sink_name; do
         [[ -z "$sink_id" || -z "$sink_name" ]] && continue
@@ -210,22 +211,22 @@ if [[ "$arg" == "devices" || "$arg" == "d" ]]; then
         fi
     done < <(list_sinks "$backend")
     if (( local_count == 0 )); then
-        echo "f! action None"
-        echo "  No output devices found @meta:nonselectable=true|"
+        echo "qst! action None"
+        echo "  No output devices found @meta:nonselectable=true @meta:center=true|"
     fi
     exit 0
 fi
 
 if [[ "$arg" =~ ^\+([0-9]+)$ ]]; then
     delta="${BASH_REMATCH[1]}"
-    echo "f! action ExecuteAndRefresh"
+    echo "qst! action Execute,RefreshResults"
     echo "  Increase volume by ${delta}%|$(adjust_volume_cmd "$backend" "$delta")"
     exit 0
 fi
 
 if [[ "$arg" =~ ^-([0-9]+)$ ]]; then
     delta="${BASH_REMATCH[1]}"
-    echo "f! action ExecuteAndRefresh"
+    echo "qst! action Execute,RefreshResults"
     echo "  Decrease volume by ${delta}%|$(adjust_volume_cmd "$backend" "-$delta")"
     exit 0
 fi
@@ -233,20 +234,20 @@ fi
 if [[ "$arg" =~ ^[0-9]+$ ]]; then
     target="$arg"
     if (( target > 150 )); then target=150; fi
-    echo "f! action ExecuteAndRefresh"
+    echo "qst! action Execute,RefreshResults"
     echo "  Set volume to ${target}%|$(set_volume_cmd "$backend" "$target")"
     exit 0
 fi
 
-echo "f! action ExecuteAndRefresh"
+echo "qst! action Execute,RefreshResults"
 if [[ "$current_vol" == "-1" ]]; then
-    echo "  Volume status unavailable @meta:nonselectable=true|"
+    echo "  Volume status unavailable @meta:nonselectable=true @meta:center=true|"
 else
     bar="$(volume_bar "$current_vol")"
     if [[ "$muted" == "1" ]]; then
-        echo "  ${current_vol}% ${bar} [MUTED] @meta:nonselectable=true @meta:urgent=true|"
+        echo "  ${current_vol}% ${bar} [MUTED] @meta:nonselectable=true @meta:urgent=true @meta:center=true|"
     else
-        echo "  ${current_vol}% ${bar} @meta:nonselectable=true @meta:active=true|"
+        echo "  ${current_vol}% ${bar} @meta:nonselectable=true @meta:active=true @meta:center=true|"
     fi
 fi
 echo "  Volume Up  (+5%)|$(adjust_volume_cmd "$backend" 5)"
@@ -260,4 +261,4 @@ echo "  Set to 25%|$(set_volume_cmd "$backend" 25)"
 echo "  Set to 50%|$(set_volume_cmd "$backend" 50)"
 echo "  Set to 75%|$(set_volume_cmd "$backend" 75)"
 echo "  Set to 100%|$(set_volume_cmd "$backend" 100)"
-echo "  Output Devices (v! devices) @meta:nonselectable=true @meta:permanent=true|"
+echo "  Output Devices (v! devices) @meta:nonselectable=true @meta:permanent=true @meta:center=true|"

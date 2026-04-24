@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo "qst! meta Symbols, 1.0.0, GitanElyon, Searches and inserts symbols."
 
 QUERY="${1:-}"
 query_lc="${QUERY,,}"
@@ -59,8 +60,8 @@ is_favorite() {
     grep -q "\"$name\"" "$hist"
 }
 
-echo "f! title Symbols"
-echo "f! action CopyToClipboardAndExit"
+echo "qst! title Symbols"
+echo "qst! action CopyToClipboard,ExitApp"
 
 count=0
 
@@ -80,7 +81,7 @@ while IFS=$'\t' read -r name symbol; do
         row_meta=""
     fi
 
-    echo "f! item ${title}|${symbol} @meta:meta=unicode,symbol${row_meta}"
+    echo "qst! item ${title}|${symbol} @meta:meta=unicode,symbol${row_meta}"
     
     count=$((count + 1))
     if (( count >= 300 )); then
