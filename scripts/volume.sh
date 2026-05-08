@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 echo "qst! meta Volume, 1.0.0, GitanElyon, Adjusts audio volume."
 QUERY="${1:-}"
 
@@ -74,8 +75,12 @@ volume_bar() {
     local filled=$(( (v*width + 50) / 100 ))
     local empty=$(( width - filled ))
     printf '['
-    printf '█%.0s' $(seq 1 "$filled" 2>/dev/null)
-    printf '░%.0s' $(seq 1 "$empty" 2>/dev/null)
+    if (( filled > 0 )); then
+        printf '█%.0s' $(seq 1 "$filled" 2>/dev/null)
+    fi
+    if (( empty > 0 )); then
+        printf '░%.0s' $(seq 1 "$empty" 2>/dev/null)
+    fi
     printf ']'
 }
 

@@ -22,6 +22,8 @@ Every script added to this pack should meet the following baseline standards:
 - Preserve backward compatibility when possible, especially for metadata fields, aliases, and action names.
 - Prefer portable shell or interpreter features that work with the supported script styles listed in `API.md`.
 - Fail clearly when required dependencies are missing or when the script cannot complete its task.
+- For Bash scripts, enable `set -euo pipefail` by default and make any intentional empty or missing-value cases explicit in the code.
+- Run `bash -n` on edited shell scripts before opening a pull request.
 
 Scripts that manage persistent state should also follow these rules:
 

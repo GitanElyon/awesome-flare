@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 echo "qst! meta Calculator, 1.0.0, GitanElyon, Evaluates quick arithmetic expressions."
 
 QUERY="${1:-}"

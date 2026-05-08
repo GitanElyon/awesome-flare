@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 echo "qst! meta Brightness, 1.0.0, GitanElyon, Adjusts screen brightness."
 
 QUERY="${1:-}"

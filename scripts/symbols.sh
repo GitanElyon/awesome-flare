@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 echo "qst! meta Symbols, 2.0.0, GitanElyon, Browses Nerd Fonts symbols."
 
 QUERY="${1:-}"

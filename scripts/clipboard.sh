@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 echo "qst! meta Clipboard, 1.0.0, GitanElyon, Browses clipboard history."
 
 QUERY="${1:-}"
@@ -31,7 +32,7 @@ emit_raw_item() {
     if [[ -n "$search" && "$lower" != *"$search"* ]]; then
         return
     fi
-    if [[ -n "${seen[$title]}" ]]; then
+    if [[ -n "${seen[$title]-}" ]]; then
         return
     fi
     seen["$title"]=1
@@ -61,7 +62,7 @@ emit_cliphist_item() {
     if [[ -n "$search" && "$lower" != *"$search"* ]]; then
         return
     fi
-    if [[ -n "${seen[$title]}" ]]; then
+    if [[ -n "${seen[$title]-}" ]]; then
         return
     fi
     seen["$title"]=1

@@ -16,19 +16,33 @@ Scripts can also declare a metadata header with `qst! meta name,version,author,d
 ## Included scripts
 
 - `battery.sh`
+  - Gives battery status and controls.
 - `bluetooth.sh`
+  - Lists paired Bluetooth devices and controls.
 - `brightness.sh`
+  - Shows and adjusts screen brightness.
 - `clock.sh`
+  - Displays the current time and date. Has timers and stopwatch features.
 - `calculator.sh`
+  - A simple calculator that evaluates expressions.
 - `clipboard.sh`
+  - Shows clipboard history, select item to add to clipboard.
 - `help.sh`
+  - Shows available plugins, their aliases and metadata.
 - `loader.sh`
+  - Quick script to add, remove, and manage other plugins.
 - `runner.sh`
+  - Allows running standard shell commands
 - `system.sh`
+  - Shows system information and controls.
 - `todo.sh`
+  - A basic todo list tool.
 - `sudo.sh`
+  - A quick way to run commands with sudo.
 - `symbols.sh`
+  - A dyanamically loaded list of all nerd-font symbols, for easy copying.
 - `volume.sh`
+  - Shows and adjusts system volume.
 
 ## Install locally
 

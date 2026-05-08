@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 echo "qst! meta Bluetooth, 1.0.0, GitanElyon, Manages Bluetooth devices and adapter state."
 
 QUERY="${1:-}"

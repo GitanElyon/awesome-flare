@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 echo "qst! meta Script Commands, 1.0.0, GitanElyon, Lists available scripts and aliases."
 
 SCRIPT_DIR="$HOME/.config/qst/scripts"
@@ -38,7 +39,7 @@ echo "qst! action None"
 
 declare -A ALIASES
 if [[ -f "$ALIAS_FILE" ]]; then
-	has_scripts_section=$(grep -Fc "[scripts]" "$ALIAS_FILE")
+	has_scripts_section=$(grep -Fc "[scripts]" "$ALIAS_FILE" || true)
 	in_scripts_section=0
 
 	while IFS= read -r line; do
@@ -91,7 +92,7 @@ while IFS= read -r script; do
 		IFS=$'\t' read -r meta_name meta_version meta_author meta_description <<< "$metadata"
 	fi
 
-	alias="${ALIASES[$stem]}"
+	alias="${ALIASES[$stem]-}"
 	display="${meta_name:-$base}"
 	[[ -n "$meta_version" ]] && display="${display} ${meta_version}"
 	[[ -n "$alias" ]] && display="${display} [alias: ${alias}]"

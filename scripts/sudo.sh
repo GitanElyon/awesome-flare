@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 echo "qst! meta Sudo, 1.0.0, GitanElyon, Runs commands with elevated privileges."
 
 QUERY="${1:-}"
