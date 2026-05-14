@@ -1,6 +1,6 @@
-# Qst Plugin Docs (Script Pack)
+# Qst Plugin Docs
 
-This folder is the script-plugin side of qst (the `awesome-qst` plugin set).
+This directory contains the script-pack for qst, including the bundled plugins, authoring notes, and protocol reference.
 
 ## Install scripts
 
@@ -10,7 +10,7 @@ cp -r scripts/* ~/.config/qst/scripts/
 chmod +x ~/.config/qst/scripts/*
 ```
 
-Restart qst after adding scripts.
+Restart qst after adding or updating scripts.
 
 ## Aliases
 
@@ -33,15 +33,15 @@ battery = ":"
 
 Notes:
 
-- Keys may include or omit script extensions (`.sh`, `.pl`, etc.).
-- Quoted keys are recommended when keys include dots.
-- Unquoted dotted keys are treated as TOML dotted paths but are still supported by qst alias parsing.
+- Keys may include or omit script extensions such as `.sh` or `.pl`.
+- Quote keys that contain dots or other TOML-sensitive characters.
+- Unquoted dotted keys are treated as TOML dotted paths, and qst still resolves them correctly.
 
 ## Script contract
 
-- Input: script arguments from current query.
-- Output: line-oriented protocol parsed by qst.
-- Control: use `qst!` directives for title, actions, item overrides, and single-result mode.
+- Input: scripts receive the current query payload as command-line arguments.
+- Output: scripts must emit qst's line-oriented protocol on standard output.
+- Control: use `qst!` directives for titles, actions, item overrides, and single-result responses.
 
 ## Script metadata
 
@@ -58,6 +58,6 @@ The fields are, in order:
 - `author`
 - `description`
 
-The helper scripts read that header to show names, versions, authors, and descriptions in their own views, and qst also recognizes `qst! meta name`, `qst! meta version`, `qst! meta author`, and `qst! meta description` as field selectors after the header has been declared.
+The helper scripts read that header to display script names, versions, authors, and descriptions. After the header has been emitted, qst also recognizes `qst! meta name`, `qst! meta version`, `qst! meta author`, and `qst! meta description` as field selectors.
 
 Full protocol reference: [API.md](API.md).

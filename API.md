@@ -1,17 +1,17 @@
 # Qst Script Plugin API
 
-This API is used by script plugins placed in `~/.config/qst/scripts/`.
+This API defines the contract for script plugins placed in `~/.config/qst/scripts/`.
 
 Supported script styles:
 
-- Executable scripts/binaries (run directly).
-- Non-executable scripts with supported extensions (run via interpreter):
-	- `.sh`, `.bash`, `.zsh`, `.fish`
-	- `.py`
-	- `.pl`
-	- `.rb`
-	- `.js`
-	- `.lua`
+- Executable scripts or binaries, run directly.
+- Non-executable scripts with supported extensions, dispatched through an interpreter:
+  - `.sh`, `.bash`, `.zsh`, `.fish`
+  - `.py`
+  - `.pl`
+  - `.rb`
+  - `.js`
+  - `.lua`
 
 The broader ecosystem is cataloged in `awesome-qst`:
 
@@ -19,45 +19,45 @@ The broader ecosystem is cataloged in `awesome-qst`:
 
 ## Invocation model
 
-- A script is invoked with the current query payload as arguments.
-- Script stdout is parsed line-by-line by qst.
+- Scripts are invoked with the current query payload as command-line arguments.
+- qst parses standard output line by line.
 - Empty lines are ignored.
 
 ## Item output
 
-- `Title|Value` → list row (`Title`) with payload (`Value`)
-- `Title` → shorthand row where value defaults to title
+- `Title|Value` produces a list row with visible title `Title` and payload `Value`.
+- `Title` is shorthand for a row where the payload defaults to the title.
 
 ## Host directives
 
 Lines prefixed with `qst! ` are control directives:
 
 - `qst! title <text>`
-	- Sets list title.
+  - Sets the list title.
 - `qst! message <text>`
-	- Sets the status/message line under the input.
+  - Sets the status or message line under the input.
 - `qst! clear_message`
-	- Clears the status/message line.
+  - Clears the status or message line.
 - `qst! action <Action>`
-	- Sets default action for all list rows.
+  - Sets the default action for all list rows.
 - `qst! item_action <Action>`
-	- Sets action for only the next emitted row.
+  - Sets the action for only the next emitted row.
 - `qst! default_item_action <Action>`
-	- Sets action for all following rows unless overridden.
+  - Sets the action for all following rows unless overridden.
 - `qst! item <title>|<value>|<Action>`
-	- Emits an explicit row with optional per-item action.
+  - Emits an explicit row with an optional per-item action.
 - `qst! clear`
-	- Clears all accumulated rows.
+  - Clears all accumulated rows.
 - `qst! single <query>|<result>`
-	- Returns a single-result response instead of list mode.
+  - Returns a single-result response instead of list mode.
 - `qst! write <file>|<WriteAction>|<value>`
-	- Mutates `~/.config/qst/storage/<plugin-name>/<file>`.
+  - Mutates `~/.config/qst/storage/<plugin-name>/<file>`.
 - `qst! read <file>`
-	- Reads the entire file and emits each stored line as a row.
+  - Reads the entire file and emits each stored line as a row.
 - `qst! read <file>|<ReadAction>`
-	- Reads the file with the specified action and emits the result as a single row.
+  - Reads the file with the specified action and emits the result as a single row.
 - `qst! delete <file>`
-	- Deletes the stored file.
+  - Deletes the stored file.
 
 ## Script metadata
 
@@ -74,16 +74,16 @@ The fields are, in order:
 - `author`
 - `description`
 
-The header is parsed by qst as a first-class directive, so scripts can also ask for one field at a time after the header has been emitted:
+The header is parsed by qst as a first-class directive. After the header has been emitted, scripts can request one field at a time:
 
 - `qst! meta name`
 - `qst! meta version`
 - `qst! meta author`
 - `qst! meta description`
 
-Helper scripts such as `help.sh` and `loader.sh` can read the same header to surface script details in their own UI, and they can also use the selector form when they want a single metadata field in a response.
+Helper scripts such as `help.sh` and `loader.sh` can read the same header to surface script details in their own UI, and they can also use the selector form when they need a single metadata field in a response.
 
-Use the selector form when you want to work with one field from the metadata header.
+Use the selector form when only one metadata field is needed.
 
 ## Row metadata
 
@@ -99,85 +99,85 @@ Rules:
 
 - Metadata tokens are appended at the end of the row or directive payload.
 - Multiple metadata tokens may be chained in the same row.
-- If a literal `/@meta` is used at the start of a row, qst treats it as normal text. 
+- If a literal `/@meta` is used at the start of a row, qst treats it as normal text.
 
 Supported row metadata keys:
 
 - `display=<text>`
-	- Overrides the visible label for the row.
+  - Overrides the visible label for the row.
 - `fuzzy=<bool>`
-	- Opts the row into host-side fuzzy filtering. When attached to a title or message directive, it enables fuzzy filtering for all rows in that script response.
+  - Opts the row into host-side fuzzy filtering. When attached to a title or message directive, it enables fuzzy filtering for the entire script response.
 - `meta=<terms>`
-	- Adds hidden search terms. Separate multiple terms with commas.
+  - Adds hidden search terms. Separate multiple terms with commas.
 - `nonselectable=<bool>`
-	- Skips the row during selection movement.
+  - Skips the row during selection movement.
 - `permanent=<bool>`
-	- Keeps the row available for UI flows that preserve permanent rows.
+  - Keeps the row available for UI flows that preserve permanent rows.
 - `active=<bool>`
-	- Active rows receive a dark gray highlight.
+  - Renders the row with the active-state styling.
 - `center=<bool>`
-	- Centers the row within the available text area.
+  - Centers the row within the available text area.
 - `urgent=<bool>`
-	- Urgent rows are moved to the top of the list and rendered in bold red without an inline prefix.
+  - Moves the row to the top of the list and renders it in bold red without an inline prefix.
 
 ## Supported actions
 
-Actions are evaluated left-to-right and can be combined with commas, for example `CopyToClipboard,ExitApp` or `Execute,RefreshResults`.
+Actions are evaluated left to right and can be combined with commas, for example `CopyToClipboard,ExitApp` or `Execute,RefreshResults`.
 
 ### Main Actions
 
 - `CopyToClipboard`
-	- Copies value to clipboard and keeps qst open.
+  - Copies the value to the clipboard and keeps qst open.
 - `SetStatusMessage`
-	- Sets the status/message line to value.
+  - Sets the status or message line to the row value.
 - `ClearStatusMessage`
-	- Clears the status/message line.
+  - Clears the status or message line.
 - `SetSearchQuery`
-	- Replaces the current query with value.
+  - Replaces the current query with the row value.
 - `AppendToQuery`
-	- Appends value to the current query.
+  - Appends the row value to the current query.
 - `PrependToQuery`
-	- Inserts value at the beginning of the current query.
+  - Inserts the row value at the beginning of the current query.
 - `ReplaceLastToken`
-	- Replaces the trailing whitespace-delimited token with value.
+  - Replaces the trailing whitespace-delimited token with the row value.
 - `PopLastToken`
-	- Removes the trailing whitespace-delimited token from the current query.
+  - Removes the trailing whitespace-delimited token from the current query.
 - `PopLastChar`
-	- Removes the last character from the current query.
+  - Removes the last character from the current query.
 - `ClearQuery`
-	- Clears the entire query.
+  - Clears the entire query.
 - `RefreshResults`
-	- Re-runs filtering/script resolution without changing query text.
+  - Re-runs filtering and script resolution without changing the query text.
 - `Execute`
-	- Executes value as a shell command and keeps qst open.
+  - Executes the row value as a shell command and keeps qst open.
 - `ExitApp`
-	- Exits qst.
+  - Exits qst.
 - `ResetPrompt`
-	- Resets the search query back to its first token (e.g. `todo n example` becomes `todo `). If it follows `Execute` in the same action list, it waits for that command to finish first.
+  - Resets the search query back to its first token. For example, `todo n example` becomes `todo `. If it follows `Execute` in the same action list, qst waits for that command to finish first.
 - `None`
-	- No-op action, keeps qst open.
+  - No-op action; keeps qst open.
 
 ### Write Actions
 
 - `pfront`
-	- Push value to the front of the file.
+  - Pushes the value to the front of the file.
 - `pback`
-	- Push value to the back of the file.
+  - Pushes the value to the back of the file.
 - `rmfront`
-	- Remove a line from the front of the file.
+  - Removes a line from the front of the file.
 - `rmback`
-	- Remove a line from the back of the file.
+  - Removes a line from the back of the file.
 - `purge`
-	- Remove every stored line that exactly matches the provided value.
+  - Removes every stored line that exactly matches the provided value.
 
 ### Read Actions
 
 - `fpeek`
-	- Read a line from the front of the file without removing it.
+  - Reads a line from the front of the file without removing it.
 - `bpeek`
-	- Read a line from the back of the file without removing it.
+  - Reads a line from the back of the file without removing it.
 - `all`
-	- Read the entire file content.
+  - Reads the entire file content.
 
 Storage files are created automatically when a write directive targets a missing file.
 

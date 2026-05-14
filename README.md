@@ -3,46 +3,46 @@
 </p>
 
 
-This repository contains a curated catalog of plugins for [qst](https://github.com/gitanelyon/qst), a terminal-first Linux application launcher built with Rust + Ratatui.
+This repository hosts the curated plugin catalog for [qst](https://github.com/gitanelyon/qst), a terminal-first Linux application launcher built with Rust and Ratatui.
 
 ## What is here
 
-- `scripts/`: plugin scripts used by qst (`*.sh`, `*.pl`, `*.py`, etc.).
-- `API.md`: script protocol reference (`qst!` directives, actions, output format).
-- `DOCS.md`: installation, aliases, and authoring guide.
+- `scripts/`: plugin scripts used by qst, including shell, Python, Perl, and other supported script types.
+- `API.md`: protocol reference for `qst!` directives, actions, metadata, and row formatting.
+- `DOCS.md`: installation instructions, alias configuration, and script authoring guidance.
 
-Scripts can also declare a metadata header with `qst! meta name,version,author,description`. qst recognizes the same header at runtime, and `help.sh` and `loader.sh` can surface richer details from it.
+Scripts may declare a metadata header with `qst! meta name,version,author,description`. qst recognizes the same header at runtime, and `help.sh` and `loader.sh` surface those fields in their own views.
 
 ## Included scripts
 
 - `battery.sh`
-  - Gives battery status and controls.
+  - Battery status and power information.
 - `bluetooth.sh`
-  - Lists paired Bluetooth devices and controls.
+  - Bluetooth device discovery and management.
 - `brightness.sh`
-  - Shows and adjusts screen brightness.
+  - Screen brightness inspection and adjustment.
 - `clock.sh`
-  - Displays the current time and date. Has timers and stopwatch features.
+  - Clock, timers, and stopwatch functionality.
 - `calculator.sh`
-  - A simple calculator that evaluates expressions.
+  - Expression evaluation for quick calculations.
 - `clipboard.sh`
-  - Shows clipboard history, select item to add to clipboard.
+  - Clipboard history browser and writer.
 - `help.sh`
-  - Shows available plugins, their aliases and metadata.
+  - Plugin catalog with aliases and metadata.
 - `loader.sh`
-  - Quick script to add, remove, and manage other plugins.
+  - Plugin installation and management helper.
 - `runner.sh`
-  - Allows running standard shell commands
+  - Shell command launcher.
 - `system.sh`
-  - Shows system information and controls.
+  - System information and status overview.
 - `todo.sh`
-  - A basic todo list tool.
+  - Simple task list manager.
 - `sudo.sh`
-  - A quick way to run commands with sudo.
+  - Privileged command runner.
 - `symbols.sh`
-  - A dyanamically loaded list of all nerd-font symbols, for easy copying.
+  - Nerd Font symbol browser for fast copying.
 - `volume.sh`
-  - Shows and adjusts system volume.
+  - Audio volume inspection and adjustment.
 
 ## Install locally
 
