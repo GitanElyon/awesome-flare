@@ -33,8 +33,10 @@ Scripts may declare a metadata header with `qst! meta name,version,author,descri
   - Plugin installation and management helper.
 - `runner.sh`
   - Shell command launcher.
-- `system.sh`
+- `info.sh`
   - System information and status overview.
+- `system.sh`
+  - System control actions like shutdown and reboot.
 - `todo.sh`
   - Simple task list manager.
 - `sudo.sh`
