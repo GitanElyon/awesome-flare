@@ -56,6 +56,8 @@ chmod +x ~/.config/qst/scripts/*
 
 Optional aliases can be defined in `~/.config/qst/alias.toml`.
 
+Note: recent qst releases include a bundled `loader.sh` helper that will be copied to `~/.config/qst/scripts/` automatically on first run. Manually copying the scripts directory is still supported but no longer required to get the `loader.sh` helper.
+
 If you use extension-based keys (`.sh`, `.pl`, etc.), quote them in TOML:
 
 ```toml
