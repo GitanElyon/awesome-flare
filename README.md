@@ -33,6 +33,8 @@ Scripts may declare a metadata header with `qst! meta name,version,author,descri
   - Plugin installation and management helper.
 - `runner.sh`
   - Shell command launcher.
+- `search.sh`
+  - Web search helper that opens the default browser.
 - `info.sh`
   - System information and status overview.
 - `system.sh`
