@@ -47,6 +47,8 @@ Scripts may declare a metadata header with `qst! meta name,version,author,descri
   - Nerd Font symbol browser for fast copying.
 - `volume.sh`
   - Audio volume inspection and adjustment.
+- `media.sh`
+  - Control currently playing media via playerctl (MPRIS).
 
 ## Install locally
 
