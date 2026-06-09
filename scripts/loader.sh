@@ -158,8 +158,14 @@ refresh_catalog_cache() {
 }
 
 ensure_catalog() {
+	local cache_age max_age=86400
 	ensure_store
 	if [[ ! -f "$CACHE_FILE" ]]; then
+		refresh_catalog_cache
+		return $?
+	fi
+	cache_age="$(($(date +%s) - $(stat -c %Y "$CACHE_FILE" 2>/dev/null || echo 0)))"
+	if [[ "$cache_age" -ge "$max_age" ]]; then
 		refresh_catalog_cache
 		return $?
 	fi
@@ -532,6 +538,7 @@ render_help() {
 	echo "  loader r <script>         remove the script locally|"
 	echo "  loader a <script> <alias> set or replace an alias|"
 	echo "  loader x <script>         remove an alias|"
+	echo "  loader refresh            force refresh the catalog from GitHub|"
 }
 
 render_browse() {
@@ -675,6 +682,7 @@ run_direct_command() {
 	case "$command" in
 		refresh)
 			refresh_catalog_cache
+			render_browse ""
 			return 0
 			;;
 		help|h)
