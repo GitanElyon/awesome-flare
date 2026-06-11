@@ -60,3 +60,7 @@ When a script is invoked, it receives the current query payload as its arguments
 Arguments must be handled by the script itself and are not automatically parsed by qst. This allows for maximum flexibility in how scripts interpret and use the input data.
 
 Unless there is a reason not to, scripts should accept single letter flags for common options (e.g. `h` for help, `v` for version, etc.) and should provide a `h` (`help`) option to display usage information.
+
+# Legal
+
+By contributing to this repository, you agree that your contributions will be licensed under the MIT License. Please ensure that any code you submit is your original work or properly attributed if it includes third-party code.
