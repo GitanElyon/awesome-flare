@@ -49,6 +49,13 @@ echo "qst! meta My Script, 1.0.0, Your Name, A brief description of what the scr
 ```
 
 Scripts can also emit `qst! meta name`, `qst! meta version`, `qst! meta author`, or `qst! meta description` after the header if they need one field for their own UI.
+
+### Distro Compatibility
+
+Scripts should aim to be compatible with a wide range of Linux distributions and environments. Avoid using features or dependencies that are not commonly available unless the script is specifically designed for a niche use case.
+
+This includes things like avoiding reliancing on a specific package manager, desktop environment, or shell unless the script is explicitly for that context. This also means not embeding another language like python in bash script.
+
 ## Script Protocol
 
 Scripts in `awesome-qst` communicate with the host application (qst) using a line-oriented protocol. Each line of output from a script is parsed by qst to determine how to update the UI, what actions to set, and how to respond to user input.
