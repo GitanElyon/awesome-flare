@@ -22,6 +22,49 @@ emit_info_row() {
     [[ -n "$row" ]] && echo "${row} @meta:nonselectable=true|"
 }
 
+glyph_rows() {
+    case "$1" in
+        0) printf '%s' '█▀█|█ █|▀▀▀' ;;
+        1) printf '%s' '  █|  █|  ▀' ;;
+        2) printf '%s' '▀▀█|█▀▀|▀▀▀' ;;
+        3) printf '%s' '▀▀█|▀▀█|▀▀▀' ;;
+        4) printf '%s' '█ █|▀▀█|  ▀' ;;
+        5) printf '%s' '█▀▀|▀▀█|▀▀▀' ;;
+        6) printf '%s' '█▀▀|█▀█|▀▀▀' ;;
+        7) printf '%s' '▀▀█|  █|  ▀' ;;
+        8) printf '%s' '█▀█|█▀█|▀▀▀' ;;
+        9) printf '%s' '█▀█|▀▀█|▀▀▀' ;;
+        :) printf '%s' ' ▄ | ▄ |   ' ;;
+        %) printf '%s' '▀ █|▄▀ |▀ ▀' ;;
+        *) printf '%s' '█▀█|█ █|█▄█' ;;
+    esac
+}
+
+emit_battery_large() {
+    local number="${1}" urgent="${2:-false}"
+    local display_text="${number}%"
+    local row output glyph char i first_part second_part third_part meta
+    meta="@meta:nonselectable=true @meta:center=true"
+    [[ "$urgent" == "true" ]] && meta="${meta} @meta:urgent=true @meta:icon=🔋"
+    for row in 1 2 3; do
+        output=""
+        for ((i = 0; i < ${#display_text}; i++)); do
+            char="${display_text:i:1}"
+            glyph="$(glyph_rows "$char")"
+            first_part="${glyph%%|*}"
+            second_part="${glyph#*|}"
+            second_part="${second_part%%|*}"
+            third_part="${glyph##*|}"
+            case "$row" in
+                1) output+="${first_part} " ;;
+                2) output+="${second_part} " ;;
+                3) output+="${third_part} " ;;
+            esac
+        done
+        printf 'qst! item  %s|%s|None %s\n' "$output" "$output" "$meta"
+    done
+}
+
 for bat in "$base"/BAT*; do
     [[ -d "$bat" ]] || continue
     found=1
@@ -32,12 +75,13 @@ for bat in "$base"/BAT*; do
     model="$(cat "$bat/model_name" 2>/dev/null | tr -d '\n')"
     [[ -z "$model" ]] && model="$name"
 
-    row_meta=" @meta:nonselectable=true @meta:icon=🔋"
+    urgent=false
     if [[ "$capacity" =~ ^[0-9]+$ ]] && (( capacity < 10 )); then
-        row_meta="${row_meta} @meta:urgent=true"
+        urgent=true
     fi
 
-    echo "${model} (${capacity}%)  ${status}${row_meta}|"
+    emit_battery_large "$capacity" "$urgent"
+    emit_info_row "${model}  ·  ${status}"
 
     energy_now="$(read_u64 "$bat/energy_now" || true)"
     power_now="$(read_u64 "$bat/power_now" || true)"
