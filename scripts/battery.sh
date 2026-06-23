@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-echo "qst! meta Battery Info, 1.0.0, GitanElyon, Shows battery status and health."
+echo "qst! meta Battery Info, 1.1.1, GitanElyon, Shows battery status and health."
 
 echo "qst! title Battery Info"
 echo "qst! action None"
@@ -35,7 +35,7 @@ glyph_rows() {
         8) printf '%s' '█▀█|█▀█|▀▀▀' ;;
         9) printf '%s' '█▀█|▀▀█|▀▀▀' ;;
         :) printf '%s' ' ▄ | ▄ |   ' ;;
-        %) printf '%s' '▀ █|▄▀ |▀ ▀' ;;
+        %) printf '%s' '▀ █|▄▀⠀|▀ ▀' ;; # Used a brail none character for the middle row to avoid a space in the middle of the percent sign. 
         *) printf '%s' '█▀█|█ █|█▄█' ;;
     esac
 }
