@@ -58,6 +58,8 @@ Lines prefixed with `qst! ` are control directives:
   - Reads the file with the specified action and emits the result as a single row.
 - `qst! delete <file>`
   - Deletes the stored file.
+- - `qst! log <message>`
+  - Writes a timestamped message to `~/.local/state/qst/<plugin-name>.log`.
 
 ## Script metadata
 
