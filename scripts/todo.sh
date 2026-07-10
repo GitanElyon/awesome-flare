@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-echo "qst! meta Todo, 1.0.0, GitanElyon, Manages a simple todo list."
+echo "qst! meta Todo, 1.0.1, GitanElyon, Manages a simple todo list."
 set -euo pipefail
 
 SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"
@@ -138,7 +138,7 @@ render_help() {
 	echo "qst! title  Todo Help "
 	echo "qst! action None"
 	echo "qst! item  todo               browse items and check them off|todo|None @meta:nonselectable=true"
-	echo "qst! item  todo n <item>      add a new item|todo n <item>|None @meta:nonselectable=true"
+	echo "qst! item  todo a <item>      add a new item|todo a <item>|None @meta:nonselectable=true"
 	echo "qst! item  todo c <item>      fuzzy find and check the top result|todo c <item>|None @meta:nonselectable=true"
 	echo "qst! item  todo r <item>      fuzzy find and remove the top result|todo r <item>|None @meta:nonselectable=true"
 	echo "qst! item  todo C             clear the list|todo C|None @meta:nonselectable=true"
@@ -390,7 +390,7 @@ handle_query() {
 		head="${raw_query%% *}"
 		payload="${raw_query#* }"
 		case "$head" in
-			n|c|r|C|u|e|v|s|h)
+			a|c|r|C|u|e|v|s|h)
 				mode="$head"
 				payload="$(trim_leading_space "$payload")"
 				;;
@@ -401,7 +401,7 @@ handle_query() {
 		esac
 	else
 		case "$raw_query" in
-			n|c|r|C|u|e|v|s|h)
+			a|c|r|C|u|e|v|s|h)
 				mode="$raw_query"
 				payload=""
 				;;
@@ -422,7 +422,7 @@ handle_query() {
 			fi
 			emit_clear_mode
 			;;
-		n)
+		a)
 			if [[ -z "$payload" ]]; then
 				if emit_help_if_empty; then
 					return 0
