@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-echo "qst! meta Battery Info, 1.1.1, GitanElyon, Shows battery status and health."
+echo "qst! meta Battery Info, 1.2.0, GitanElyon, Shows battery status and health."
 
 echo "qst! title Battery Info"
 echo "qst! action None"
@@ -106,6 +106,12 @@ for bat in "$base"/BAT*; do
 
     if [[ -n "$power_now" ]]; then
         emit_info_row "$(awk -v pw="$power_now" 'BEGIN { printf("Power Usage   %.2f W\n", pw/1000000) }')"
+    fi
+
+    full="${energy_full:-$charge_full}"
+    full_design="$(read_u64 "$bat/energy_full_design" || read_u64 "$bat/charge_full_design" || true)"
+    if [[ -n "$full" && -n "$full_design" && "$full_design" != "0" ]]; then
+        emit_info_row "$(awk -v f="$full" -v d="$full_design" 'BEGIN { printf("Health   %.1f%%\n", (f/d)*100) }')"
     fi
 
     if [[ -f "$bat/cycle_count" ]]; then
