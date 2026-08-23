@@ -3,11 +3,11 @@
 </p>
 
 
-This repository hosts the curated plugin catalog for [qst](https://github.com/gitanelyon/qst), a terminal-first Linux application launcher built with Rust and Ratatui.
+This repository hosts the curated script catalog for [qst](https://github.com/gitanelyon/qst), a terminal-first Linux application launcher built with Rust and Ratatui.
 
 ## What is here
 
-- `scripts/`: plugin scripts used by qst, including shell, Python, Perl, and other supported script types.
+- `scripts/`: scripts used by qst, including shell, Python, Perl, and other supported script types.
 - `API.md`: protocol reference for `qst!` directives, actions, metadata, and row formatting.
 - `DOCS.md`: installation instructions, alias configuration, and script authoring guidance.
 
@@ -28,9 +28,9 @@ Scripts may declare a metadata header with `qst! meta name,version,author,descri
 - `clipboard.sh`
   - Clipboard history browser and writer.
 - `help.sh`
-  - Plugin catalog with aliases and metadata.
+  - Script catalog with aliases and metadata.
 - `loader.sh`
-  - Plugin installation and management helper.
+  - Script installation and management helper.
 - `runner.sh`
   - Shell command launcher.
 - `search.sh`

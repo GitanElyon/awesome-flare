@@ -1,6 +1,6 @@
-# Qst Script Plugin API
+# Qst Script API
 
-This API defines the contract for script plugins placed in `~/.config/qst/scripts/`.
+This API defines the contract for scripts placed in `~/.config/qst/scripts/`.
 
 Supported script styles:
 
@@ -51,7 +51,7 @@ Lines prefixed with `qst! ` are control directives:
 - `qst! single <query>|<result>`
   - Returns a single-result response instead of list mode.
 - `qst! write <file>|<WriteAction>|<value>`
-  - Mutates `~/.config/qst/storage/<plugin-name>/<file>`.
+  - Mutates `~/.config/qst/storage/<script-name>/<file>`.
 - `qst! read <file>`
   - Reads the entire file and emits each stored line as a row.
 - `qst! read <file>|<ReadAction>`

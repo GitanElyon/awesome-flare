@@ -1,6 +1,6 @@
-# Qst Plugin Docs
+# Qst Script Docs
 
-This directory contains the script-pack for qst, including the bundled plugins, authoring notes, and protocol reference.
+This directory contains the script-pack for qst, including the bundled scripts, authoring notes, and protocol reference.
 
 ## Install scripts
 

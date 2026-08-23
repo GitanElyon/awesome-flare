@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-echo "qst! meta Plugin Loader, 1.0.0, GitanElyon, Browses and installs awesome-qst scripts."
+echo "qst! meta Script Loader, 1.0.0, GitanElyon, Browses and installs awesome-qst scripts."
 set -euo pipefail
 
 SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"
@@ -438,7 +438,7 @@ render_script_matches() {
 
 	load_aliases
 	if ! ensure_catalog; then
-		echo "qst! title  Plugin Loader "
+		echo "qst! title  Script Loader "
 		echo "qst! action None"
 		echo "  Unable to load the awesome-qst catalog right now.|"
 		echo "  Try again when network access is available.|"
@@ -496,7 +496,7 @@ render_script_matches() {
 		fi
 	fi
 
-	echo "qst! title  Plugin Loader "
+	echo "qst! title  Script Loader "
 	echo "qst! action SetSearchQuery"
 
 	while IFS=$'\t' read -r name path download_url html_url; do
@@ -528,7 +528,7 @@ render_script_matches() {
 }
 
 render_help() {
-	echo "qst! title  Plugin Loader Help "
+	echo "qst! title  Script Loader Help "
 	echo "qst! action None"
 	echo "  loader                    browse the catalog|"
 	echo "  loader <terms>            filter the catalog|"
@@ -549,7 +549,7 @@ render_browse() {
 
 	load_aliases
 	if ! ensure_catalog; then
-		echo "qst! title  Plugin Loader "
+		echo "qst! title  Script Loader "
 		echo "qst! action None"
 		echo "  Unable to load the awesome-qst catalog right now.|"
 		echo "  Try again when network access is available.|"
@@ -560,7 +560,7 @@ render_browse() {
 		read -r -a terms <<< "$search_text"
 	fi
 
-	echo "qst! title  Plugin Loader "
+	echo "qst! title  Script Loader "
 	echo "qst! action SetSearchQuery"
 
 	while IFS=$'\t' read -r name path download_url html_url; do
@@ -601,7 +601,7 @@ render_summary() {
 		installed="yes"
 	fi
 
-	echo "qst! title  Plugin Loader "
+	echo "qst! title  Script Loader "
 	echo "qst! action None"
 	echo "qst! item  ← Back to catalog|loader|SetSearchQuery @meta:permanent=true"
 	echo "  Installed: ${installed}|${installed}|None @meta:nonselectable=true"
@@ -636,7 +636,7 @@ render_info() {
 		installed="yes"
 	fi
 
-	echo "qst! title  Plugin Loader Info "
+	echo "qst! title  Script Loader Info "
 	echo "qst! action None"
 	echo "qst! item  ← Back to clean view|loader v ${path}|SetSearchQuery @meta:permanent=true"
 	echo "  Installed: ${installed}|${installed}|None @meta:nonselectable=true"
