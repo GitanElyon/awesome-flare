@@ -10,9 +10,13 @@ cp -r scripts/* ~/.config/qst/scripts/
 chmod +x ~/.config/qst/scripts/*
 ```
 
+Or use Qst's built-in `loader.sh` helper to browse and install scripts from the [awesome-qst](https://github.com/GitanElyon/awesome-qst) repository.
+
 Restart qst after adding or updating scripts.
 
 ## Aliases
+
+Aliases are optional triggers for scripts. They are defined in `~/.config/qst/alias.toml` and read by `help.sh` and `loader.sh`. Aliases can be used to invoke scripts with a shorter or more memorable trigger.
 
 `help.sh` reads aliases from:
 
@@ -60,4 +64,4 @@ The fields are, in order:
 
 The helper scripts read that header to display script names, versions, authors, and descriptions. After the header has been emitted, qst also recognizes `qst! meta name`, `qst! meta version`, `qst! meta author`, and `qst! meta description` as field selectors.
 
-Full protocol reference: [API.md](API.md).
+Full protocol reference: [qst Script API](https://github.com/GitanElyon/qst/blob/main/API.md). For advanced authoring examples, see [API.md](API.md).

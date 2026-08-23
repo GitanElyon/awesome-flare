@@ -6,21 +6,21 @@ Contributions to the `awesome-qst` repo are welcome! This includes new scripts, 
 
 Either open a pull request with your changes or open an issue to discuss new ideas or problems.
 
-When contributing scripts, please ensure they follow the protocol outlined in `API.md` and include documentation in `DOCS.md` if necessary.
+When contributing scripts, please ensure they follow the protocol outlined in the [qst Script API](https://github.com/GitanElyon/qst/blob/main/API.md) and include documentation in `DOCS.md` if necessary.
 
 ## Script standards
 
 Every script added to this pack should meet the following baseline standards:
 
 - Be self-contained and focused on one task.
-- Start with a metadata line in the format described in `API.md` so `help.sh` and `loader.sh` can identify the script.
+- Start with a metadata line in the format described in the [qst Script API](https://github.com/GitanElyon/qst/blob/main/API.md) so `help.sh` and `loader.sh` can identify the script.
 - Accept the current query payload through script arguments and handle empty input cleanly.
 - Support a `h` or `--help` style help path, and a `v` or `--version` path when it makes sense for the script.
 - Emit only qst-compatible line-oriented output on stdout; keep stray logging, debugging, and errors off the normal output stream.
 - Use `qst!` directives consistently for titles, messages, actions, item overrides, and storage operations.
 - Document any non-obvious behavior, required dependencies, or external state in `DOCS.md`.
 - Preserve backward compatibility when possible, especially for metadata fields, aliases, and action names.
-- Prefer portable shell or interpreter features that work with the supported script styles listed in `API.md`.
+- Prefer portable shell or interpreter features that work with the supported script styles listed in the [qst Script API](https://github.com/GitanElyon/qst/blob/main/API.md).
 - Fail clearly when required dependencies are missing or when the script cannot complete its task.
 - For Bash scripts, enable `set -euo pipefail` by default and make any intentional empty or missing-value cases explicit in the code.
 - Run `bash -n` on edited shell scripts before opening a pull request.

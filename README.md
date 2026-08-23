@@ -78,4 +78,4 @@ battery = ":"
 
 Unquoted dotted keys also work, but they are interpreted as TOML dotted paths.
 
-For protocol details, see [API.md](API.md).
+Full protocol reference: [qst Script API](https://github.com/GitanElyon/qst/blob/main/API.md). For advanced authoring examples, see [API.md](API.md).
