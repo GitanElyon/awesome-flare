@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-echo "qst! meta Battery Info, 1.2.0, GitanElyon, Shows battery status and health."
+echo "qst! meta Battery Info, 1.2.1, GitanElyon, Shows battery status and health."
 
 echo "qst! title Battery Info"
 echo "qst! action None"
@@ -23,20 +23,20 @@ emit_info_row() {
 }
 
 glyph_rows() {
-    case "$1" in
-        0) printf '%s' '█▀█|█ █|▀▀▀' ;;
-        1) printf '%s' '  █|  █|  ▀' ;;
+    case "$1" in # Used a brail none character for the middle row to avoid a space in the middle of the percent sign.
+        0) printf '%s' '█▀█|█⠀█|▀▀▀' ;;
+        1) printf '%s' '⠀⠀█|⠀⠀█|⠀⠀▀' ;;
         2) printf '%s' '▀▀█|█▀▀|▀▀▀' ;;
         3) printf '%s' '▀▀█|▀▀█|▀▀▀' ;;
-        4) printf '%s' '█ █|▀▀█|  ▀' ;;
+        4) printf '%s' '█⠀█|▀▀█|⠀⠀▀' ;;
         5) printf '%s' '█▀▀|▀▀█|▀▀▀' ;;
         6) printf '%s' '█▀▀|█▀█|▀▀▀' ;;
-        7) printf '%s' '▀▀█|  █|  ▀' ;;
+        7) printf '%s' '▀▀█|⠀⠀█|⠀⠀▀' ;;
         8) printf '%s' '█▀█|█▀█|▀▀▀' ;;
         9) printf '%s' '█▀█|▀▀█|▀▀▀' ;;
-        :) printf '%s' ' ▄ | ▄ |   ' ;;
-        %) printf '%s' '▀ █|▄▀⠀|▀ ▀' ;; # Used a brail none character for the middle row to avoid a space in the middle of the percent sign. 
-        *) printf '%s' '█▀█|█ █|█▄█' ;;
+        :) printf '%s' '⠀▄⠀| ▄⠀|⠀⠀⠀' ;;
+        %) printf '%s' '▀⠀█|▄▀⠀|▀⠀▀' ;; 
+        *) printf '%s' '█▀█|█⠀█|█▄█' ;;
     esac
 }
 
