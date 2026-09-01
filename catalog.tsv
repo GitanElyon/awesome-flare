@@ -1,0 +1,21 @@
+battery.sh	Battery Info	1.2.1	GitanElyon	Shows battery status and health.
+bluetooth.sh	Bluetooth	1.0.0	GitanElyon	Manages Bluetooth devices and adapter state.
+brightness.sh	Brightness	1.0.0	GitanElyon	Adjusts screen brightness.
+calculator.sh	Calculator	1.0.0	GitanElyon	Evaluates quick arithmetic expressions.
+clipboard.sh	Clipboard	1.0.0	GitanElyon	Browses clipboard history.
+clock.sh	Clock	1.0.0	GitanElyon	Shows clocks, timers, and alarms.
+devices.sh	Devices	1.0.0	GitanElyon	Shows connected Bluetooth and USB peripherals.
+emoji.sh	Emoji	1.0.0	opencode	Browses emoji glyphs.
+help.sh	Script Commands	1.0.0	GitanElyon	Lists available scripts and aliases.
+info.sh	System Info Monitor	1.0.0	GitanElyon	Shows CPU, memory, disk, network, and process usage.
+ip.sh	IP Info	1.0.0	GitanElyon	Shows public IP, local IPs, interfaces, and DNS info.
+loader.sh	Script Loader	1.0.0	GitanElyon	Browses and installs awesome-qst scripts.
+media.sh	Media	1.0.0	GitanElyon	Control currently playing media.
+runner.sh	Run Command	1.0.0	GitanElyon	Runs an arbitrary shell command.
+search.sh	Web Search	1.1.0	GitanElyon	Searches the web in your default browser.
+sudo.sh	Sudo	1.0.0	GitanElyon	Runs commands with elevated privileges.
+symbols.sh	Symbols	2.0.0	GitanElyon	Browses Nerd Fonts symbols.
+system.sh	System Power	1.0.0	GitanElyon	Reboots, powers off, or suspends the computer.
+todo.sh	Todo	1.0.1	GitanElyon	Manages a simple todo list.
+volume.sh	Volume	1.0.0	GitanElyon	Adjusts audio volume.
+weather.sh	Weather	1.0.0	GitanElyon	Shows current weather and forecast for your area.

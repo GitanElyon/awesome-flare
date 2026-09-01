@@ -24,6 +24,7 @@ Every script added to this pack should meet the following baseline standards:
 - Fail clearly when required dependencies are missing or when the script cannot complete its task.
 - For Bash scripts, enable `set -euo pipefail` by default and make any intentional empty or missing-value cases explicit in the code.
 - Run `bash -n` on edited shell scripts before opening a pull request.
+- After adding, removing, or updating a script, run `misc/generate_catalog.sh` and commit the regenerated `catalog.tsv` so `loader.sh` can display up-to-date script versions.
 
 Scripts that manage persistent state should also follow these rules:
 
