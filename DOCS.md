@@ -14,6 +14,12 @@ Or use Qst's built-in `loader.sh` helper to browse and install scripts from the 
 
 Restart qst after adding or updating scripts.
 
+## Script loader
+
+The `loader.sh` helper browses the [awesome-qst](https://github.com/GitanElyon/awesome-qst) catalog. It fetches the repository's `catalog.tsv`, which lists every script with its name, version, author, and description. The catalog is cached locally for 24 hours and falls back to the cached copy when the network is unavailable.
+
+Installed scripts are highlighted in the list, and scripts whose installed version is older than the catalog version are flagged as out of date. Those scripts can be updated directly from the loader (`loader u <script>`), which replaces the local copy with the newest catalog version.
+
 ## Aliases
 
 Aliases are optional triggers for scripts. They are defined in `~/.config/qst/alias.toml` and read by `help.sh` and `loader.sh`. Aliases can be used to invoke scripts with a shorter or more memorable trigger.
