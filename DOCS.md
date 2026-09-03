@@ -4,25 +4,35 @@ This directory contains the script-pack for qst, including the bundled scripts, 
 
 ## Install scripts
 
+Manual installation:
+
 ```bash
 mkdir -p ~/.config/qst/scripts
 cp -r scripts/* ~/.config/qst/scripts/
 chmod +x ~/.config/qst/scripts/*
 ```
 
-Or use Qst's built-in `loader.sh` helper to browse and install scripts from the [awesome-qst](https://github.com/GitanElyon/awesome-qst) repository.
+Through Qst:
+```bash
+qst --install <script>
+```
+
+Through `loader.sh`:
+```
+loader i <script>
+```
 
 Restart qst after adding or updating scripts.
 
 ## Script loader
 
-The `loader.sh` helper browses the [awesome-qst](https://github.com/GitanElyon/awesome-qst) catalog. It fetches the repository's `catalog.tsv`, which lists every script with its name, version, author, and description. The catalog is cached locally for 24 hours and falls back to the cached copy when the network is unavailable.
+The `loader.sh` helper browses the [awesome-qst](https://github.com/GitanElyon/awesome-qst) catalog. It reads the catalog cache that qst maintains at `~/.config/qst/storage/catalog.tsv`, which lists every script with its name, version, author, and description. qst refreshes that cache when it is opened (or when `qst --refresh-catalog` is run), so the loader always shows the current catalog without fetching anything itself.
 
-Installed scripts are highlighted in the list, and scripts whose installed version is older than the catalog version are flagged as out of date. Those scripts can be updated directly from the loader (`loader u <script>`), which replaces the local copy with the newest catalog version.
+Installed scripts are highlighted in the list, and scripts whose installed version is older than the catalog version are flagged as out of date. Install, update, and remove actions are delegated to qst (`qst --install`, `qst --update`, `qst --remove`), which requires `qst` to be available on `PATH`. If the catalog has not been downloaded yet, run qst once or `qst --refresh-catalog` first.
 
 ## Aliases
 
-Aliases are optional triggers for scripts. They are defined in `~/.config/qst/alias.toml` and read by `help.sh` and `loader.sh`. Aliases can be used to invoke scripts with a shorter or more memorable trigger.
+Aliases are optional triggers for scripts. They are defined in `~/.config/qst/alias.toml` and can be used to invoke scripts with a shorter or more memorable trigger.
 
 `help.sh` reads aliases from:
 

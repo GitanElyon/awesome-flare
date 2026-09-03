@@ -7,13 +7,38 @@ This repository hosts the curated script catalog for [qst](https://github.com/gi
 
 ## What is here
 
-- `scripts/`: scripts used by qst, including shell, Python, Perl, and other supported script types.
+- `scripts/`: scripts used by Qst, including shell, Python, Perl, and other supported script types.
+- `misc/`: scripts used for Qst's development, including logo generation, and catalog management.
 - `API.md`: protocol reference for `qst!` directives, actions, metadata, and row formatting.
 - `DOCS.md`: installation instructions, alias configuration, and script authoring guidance.
 
-Scripts may declare a metadata header with `qst! meta name,version,author,description`. qst recognizes the same header at runtime, and `help.sh` and `loader.sh` surface those fields in their own views.
+Scripts may declare a metadata header with `qst! meta name,version,author,description`. Qst recognizes the same header at runtime, and `help.sh` and `loader.sh` surface those fields in their own views.
+
+## Installing Scripts
+
+> Note: Its recomended to install a script manager like `loader.sh` to make managing scripts easier.
+
+Manual installation:
+
+```bash
+mkdir -p ~/.config/qst/scripts
+cp -r scripts/* ~/.config/qst/scripts/
+chmod +x ~/.config/qst/scripts/*
+```
+
+Through Qst:
+```bash
+qst --install <script>
+```
+
+Through `loader.sh`:
+```
+loader i <script>
+```
 
 ## Included scripts
+
+A full updated list of scripts, authors, versions and descriptions can be found in [catalog.tsv](catalog.tsv)
 
 - `battery.sh`
   - Battery status and power information.
@@ -58,17 +83,9 @@ Scripts may declare a metadata header with `qst! meta name,version,author,descri
 - `weather.sh`
   - Current weather and three-day forecast for your area.
 
-## Install locally
-
-```bash
-mkdir -p ~/.config/qst/scripts
-cp -r scripts/* ~/.config/qst/scripts/
-chmod +x ~/.config/qst/scripts/*
-```
+## Aliases
 
 Optional aliases can be defined in `~/.config/qst/alias.toml`.
-
-Note: recent qst releases include a bundled `loader.sh` helper that will be copied to `~/.config/qst/scripts/` automatically on first run. Manually copying the scripts directory is still supported but no longer required to get the `loader.sh` helper.
 
 If you use extension-based keys (`.sh`, `.pl`, etc.), quote them in TOML:
 
