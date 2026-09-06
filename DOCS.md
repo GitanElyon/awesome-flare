@@ -34,6 +34,7 @@ Installed scripts are highlighted in the list, and scripts whose installed versi
 
 Aliases are optional triggers for scripts. They are defined in `~/.config/qst/alias.toml` and can be used to invoke scripts with a shorter or more memorable trigger.
 
+A script loads only when the query matches its name or alias exactly, or is followed by a space. That space is what distinguishes invoking the script (e.g. `todo n example`) from still searching, so continuing to type past the name without a space (e.g. `clock-gtk`) keeps app search active. 
 `help.sh` reads aliases from:
 
 - `~/.config/qst/alias.toml`
