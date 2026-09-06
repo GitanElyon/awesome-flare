@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-echo "qst! meta Script Loader, 2.0.0, GitanElyon, Browses and installs awesome-qst scripts."
+echo "qst! meta Script Loader, 2.1.0, GitanElyon, Browses and installs awesome-qst scripts."
 set -euo pipefail
 
 SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"
@@ -10,14 +10,12 @@ QST_DIR="${CONFIG_HOME}/qst"
 SCRIPT_DIR="${QST_DIR}/scripts"
 ALIAS_FILE="${QST_DIR}/alias.toml"
 STORAGE_DIR="${QST_DIR}/storage/loader"
-CACHE_FILE="${STORAGE_DIR}/catalog-v2.tsv"
+CACHE_FILE="${QST_DIR}/storage/catalog.tsv"
 
 REPO_OWNER="GitanElyon"
 REPO_NAME="awesome-qst"
 REPO_BRANCH="main"
-ROOT_BASE="https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_BRANCH}"
-RAW_BASE="${ROOT_BASE}/scripts"
-CATALOG_URL="${ROOT_BASE}/catalog.tsv"
+RAW_BASE="https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_BRANCH}/scripts"
 
 declare -A ALIASES=()
 
@@ -58,55 +56,12 @@ quote_shell_args() {
 	printf '%s' "${command% }"
 }
 
-http_get() {
-	local url="$1"
-	if command -v curl >/dev/null 2>&1; then
-		curl -fsSL --retry 2 --max-time 10 --connect-timeout 5 "$url"
-		return 0
-	fi
-	if command -v wget >/dev/null 2>&1; then
-		wget -qO- --timeout=10 "$url"
-		return 0
-	fi
-	return 1
-}
-
 ensure_store() {
 	mkdir -p "$STORAGE_DIR" "$SCRIPT_DIR"
 }
 
-refresh_catalog_cache() {
-	local tmp_tsv
-	tmp_tsv="$(mktemp "${STORAGE_DIR}/catalog.XXXXXX.tsv")"
-
-	if ! http_get "$CATALOG_URL" > "$tmp_tsv"; then
-		rm -f "$tmp_tsv"
-		return 1
-	fi
-
-	if ! grep -q $'\t' "$tmp_tsv"; then
-		rm -f "$tmp_tsv"
-		return 1
-	fi
-
-	sort -t $'\t' -k1,1 -o "$tmp_tsv" "$tmp_tsv"
-	mv "$tmp_tsv" "$CACHE_FILE"
-}
-
 ensure_catalog() {
-	local cache_age max_age=86400
-	ensure_store
-	if [[ ! -f "$CACHE_FILE" ]]; then
-		refresh_catalog_cache
-		return $?
-	fi
-	cache_age="$(($(date +%s) - $(stat -c %Y "$CACHE_FILE" 2>/dev/null || echo 0)))"
-	if [[ "$cache_age" -ge "$max_age" ]]; then
-		if ! refresh_catalog_cache; then
-			echo "qst! message Using cached catalog (offline)"
-		fi
-	fi
-	return 0
+	[[ -f "$CACHE_FILE" ]]
 }
 
 load_aliases() {
@@ -331,34 +286,6 @@ remove_alias() {
 	rewrite_alias_file delete "$key"
 }
 
-install_script() {
-	local path="$1"
-	local url="$2"
-	local dest tmp dest_dir
-	dest="$(local_script_path "$path")"
-	dest_dir="$(dirname "$dest")"
-	mkdir -p "$dest_dir"
-	tmp="$(mktemp "${STORAGE_DIR}/download.XXXXXX")"
-
-	if ! http_get "$url" > "$tmp"; then
-		rm -f "$tmp"
-		return 1
-	fi
-
-	mv "$tmp" "$dest"
-	chmod +x "$dest"
-}
-
-remove_script() {
-	local path="$1"
-	remove_alias "$path"
-	if [[ "$path" == /* ]]; then
-		rm -f "$path"
-	else
-		rm -f "$(local_script_path "$path")"
-	fi
-}
-
 matches_terms() {
 	local haystack="$1"
 	shift
@@ -423,8 +350,8 @@ render_catalog_list() {
 	if ! ensure_catalog; then
 		echo "qst! title  Script Loader "
 		echo "qst! action None"
-		echo "  Unable to load the awesome-qst catalog right now.|"
-		echo "  Try again when network access is available.|"
+		echo "  Catalog not downloaded yet.|"
+		echo "  Open qst once or run qst --refresh-catalog.|"
 		return 0
 	fi
 
@@ -444,14 +371,8 @@ render_catalog_list() {
 					render_info "$exact_path"
 					return 0
 					;;
-				u|install)
-					install_script "$exact_path" "${RAW_BASE}/${exact_path}"
+				u|install|r|remove)
 					render_summary "$exact_path"
-					return 0
-					;;
-				r|remove)
-					remove_script "$exact_path"
-					render_catalog_list "" "$script_query" ""
 					return 0
 					;;
 				a|alias)
@@ -471,9 +392,8 @@ render_catalog_list() {
 			esac
 		fi
 
-		if [[ "$directive" == r || "$directive" == remove || "$directive" == x || "$directive" == unalias ]]; then
+		if [[ "$directive" == r || "$directive" == remove ]]; then
 			if [[ -f "$(local_script_path "$script_query")" ]]; then
-				remove_script "$script_query"
 				render_summary "$script_query"
 				return 0
 			fi
@@ -529,7 +449,7 @@ render_help() {
 	echo "  loader a <script> <alias> set or replace an alias|"
 	echo "  loader a <script>         remove the alias|"
 	echo "  loader x <script>         remove an alias|"
-	echo "  loader refresh            force refresh the catalog from GitHub|"
+	echo "  loader refresh            refresh the catalog via qst|"
 }
 
 render_title_line() {
@@ -577,10 +497,10 @@ render_state_row() {
 	path="${path#scripts/}"
 
 	if ! is_installed "$path"; then
-		echo "qst! item  Install|$(quote_shell_args "$SCRIPT_PATH" u "$path")|Execute,RefreshResults"
+		echo "qst! item  Install|$(quote_shell_args qst --install "$path")|Execute,RefreshResults"
 	elif is_outdated "$path"; then
 		version="$(catalog_version "$path")"
-		echo "qst! item  Update to ${version}|$(quote_shell_args "$SCRIPT_PATH" u "$path")|Execute,RefreshResults"
+		echo "qst! item  Update to ${version}|$(quote_shell_args qst --update "$path")|Execute,RefreshResults"
 	else
 		echo "  Installed|Installed|None @meta:nonselectable=true"
 	fi
@@ -602,9 +522,9 @@ render_summary() {
 	render_state_row "$path"
 
 	if [[ "$installed" == "yes" ]]; then
-		echo "qst! item  Remove|$(quote_shell_args "$SCRIPT_PATH" r "$path")|Execute,RefreshResults"
+		echo "qst! item  Remove|$(quote_shell_args qst --remove "$path")|Execute,RefreshResults"
 	else
-		echo "qst! item  Remove|$(quote_shell_args "$SCRIPT_PATH" r "$path")|None @meta:nonselectable=true"
+		echo "qst! item  Remove|$(quote_shell_args qst --remove "$path")|None @meta:nonselectable=true"
 	fi
 	echo "qst! item  Add alias|loader a ${path} |SetSearchQuery"
 	echo "qst! item  More info|loader ? ${path}|SetSearchQuery"
@@ -642,9 +562,9 @@ render_info() {
 	echo "  Local: ${local_path}|${local_path}|None @meta:nonselectable=true"
 
 	if [[ "$installed" == "yes" ]]; then
-		echo "qst! item  Remove|$(quote_shell_args "$SCRIPT_PATH" r "$path")|Execute,RefreshResults"
+		echo "qst! item  Remove|$(quote_shell_args qst --remove "$path")|Execute,RefreshResults"
 	else
-		echo "qst! item  Remove|$(quote_shell_args "$SCRIPT_PATH" r "$path")|None @meta:nonselectable=true"
+		echo "qst! item  Remove|$(quote_shell_args qst --remove "$path")|None @meta:nonselectable=true"
 	fi
 	echo "qst! item  Add alias|loader a ${path} |SetSearchQuery"
 	if [[ -n "$alias" ]]; then
@@ -669,8 +589,11 @@ run_direct_command() {
 
 	case "$command" in
 		refresh)
-			refresh_catalog_cache
-			render_catalog_list "" "" ""
+			echo "qst! title  Script Loader "
+			echo "qst! action None"
+			echo "qst! item  Refresh catalog now|$(quote_shell_args qst --refresh-catalog)|Execute,RefreshResults"
+			echo "qst! item  Browse catalog|loader |SetSearchQuery"
+			echo "qst! item  ← Back to catalog|loader|SetSearchQuery @meta:permanent=true"
 			return 0
 			;;
 		help|h)
